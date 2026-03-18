@@ -24,219 +24,222 @@
   --text: #f0f0f5;
   --text2: #a0a0b0;
   --text3: #606070;
-  --radius: 16px;
-  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-sm: 8px;
 }
-
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
 body {
   font-family: 'Inter', -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100dvh;
-  overflow-x: hidden;
-  padding-bottom: 110px;
+  background: var(--bg); color: var(--text);
+  min-height: 100dvh; overflow-x: hidden;
+  padding-bottom: 100px;
 }
 
 /* Header */
 .header {
   position: sticky; top: 0; z-index: 100;
   background: rgba(10,10,15,0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 14px 20px;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  padding: 10px 16px;
   border-bottom: 1px solid rgba(255,255,255,0.05);
   display: flex; align-items: center; justify-content: space-between;
 }
 .header-left h1 {
-  font-size: 22px; font-weight: 900; letter-spacing: 3px;
+  font-size: 20px; font-weight: 900; letter-spacing: 3px;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-.header-left .header-sub { font-size: 10px; color: var(--text3); letter-spacing: 1px; margin-top: 1px; }
-.header-right { display: flex; gap: 6px; }
+.header-left .header-sub { font-size: 9px; color: var(--text3); letter-spacing: 1px; }
 .btn-header {
-  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
   background: var(--surface2); border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px; color: var(--text2); cursor: pointer; font-size: 16px;
-  transition: all 0.2s;
+  border-radius: 10px; color: var(--text2); cursor: pointer; font-size: 15px;
 }
 .btn-header:active { transform: scale(0.9); }
 
-/* Day Tabs */
-.tabs-container { padding: 12px 16px 6px; }
-.tabs {
-  display: flex; gap: 8px; overflow-x: auto;
-  scrollbar-width: none; padding-bottom: 4px;
-}
+/* Tabs */
+.tabs-container { padding: 10px 14px 4px; }
+.tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
 .tab {
-  flex-shrink: 0;
-  padding: 10px 18px; border-radius: 50px;
+  flex-shrink: 0; padding: 8px 16px; border-radius: 50px;
   background: var(--surface2); color: var(--text2);
-  font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
-  border: 1px solid transparent;
-  cursor: pointer; transition: all 0.3s;
-  display: flex; align-items: center; gap: 8px;
-  position: relative;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+  border: 1px solid transparent; cursor: pointer; transition: all 0.3s;
+  display: flex; align-items: center; gap: 6px;
 }
 .tab.active {
   background: linear-gradient(135deg, var(--accent), #8b7cf7);
-  color: white; border-color: transparent;
-  box-shadow: 0 4px 20px var(--accent-glow);
+  color: white; box-shadow: 0 3px 16px var(--accent-glow);
 }
 .tab .tab-delete {
-  display: none; width: 18px; height: 18px;
+  display: none; width: 16px; height: 16px;
   align-items: center; justify-content: center;
   border-radius: 50%; background: rgba(0,0,0,0.3);
-  font-size: 10px; color: white; cursor: pointer;
-  margin-left: 2px; margin-right: -6px;
+  font-size: 9px; color: white; cursor: pointer;
 }
 .tab.active .tab-delete { display: flex; }
 .tab-add {
   background: transparent; border: 1px dashed var(--text3);
-  color: var(--text3); font-size: 18px; padding: 10px 16px;
+  color: var(--text3); font-size: 16px; padding: 8px 14px;
 }
 
-/* Day subtitle */
+/* Day info */
 .day-info {
-  display: flex; align-items: center; gap: 8px;
-  padding: 4px 20px 10px;
+  display: flex; align-items: center; gap: 6px; padding: 2px 16px 6px;
 }
 .day-info input {
   background: none; border: none; border-bottom: 1px solid transparent;
-  color: var(--text2); font-family: inherit; font-size: 12px;
-  letter-spacing: 0.5px; outline: none; padding: 2px 0;
-  width: 120px;
+  color: var(--text2); font-family: inherit; font-size: 11px;
+  letter-spacing: 0.5px; outline: none; padding: 2px 0; width: 110px;
 }
 .day-info input:focus { border-bottom-color: var(--accent); color: var(--text); }
-.day-info .day-actions { display: flex; gap: 6px; margin-left: auto; }
+.day-info .day-actions { display: flex; gap: 4px; margin-left: auto; }
 .day-info .btn-sm {
-  padding: 4px 10px; border-radius: 6px;
+  padding: 3px 8px; border-radius: 6px;
   background: var(--surface2); border: 1px solid rgba(255,255,255,0.06);
-  color: var(--text3); font-family: inherit; font-size: 11px;
-  cursor: pointer; transition: all 0.2s;
+  color: var(--text3); font-family: inherit; font-size: 10px; cursor: pointer;
 }
 .day-info .btn-sm:active { transform: scale(0.95); }
-.day-info .btn-sm:hover { color: var(--text2); border-color: rgba(255,255,255,0.12); }
 
 /* Rest config */
 .rest-config {
-  display: flex; align-items: center; gap: 8px;
-  padding: 0 20px 10px; font-size: 12px; color: var(--text3);
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 16px 8px; font-size: 11px; color: var(--text3);
 }
 .rest-config input {
-  width: 50px; padding: 4px 6px; border-radius: 6px;
+  width: 44px; padding: 3px 4px; border-radius: 6px;
   background: var(--surface2); border: 1px solid rgba(255,255,255,0.06);
-  color: var(--accent2); font-family: inherit; font-size: 12px;
+  color: var(--accent2); font-family: inherit; font-size: 11px;
   font-weight: 600; text-align: center; outline: none;
 }
-.rest-config input:focus { border-color: var(--accent); }
 
 /* Exercise List */
-.exercise-list { padding: 4px 16px; }
+.exercise-list { padding: 2px 12px; }
 
 .exercise-card {
   background: var(--surface);
   border: 1px solid rgba(255,255,255,0.04);
   border-radius: var(--radius);
-  padding: 14px 14px 12px;
-  margin-bottom: 10px;
+  padding: 6px 8px 6px;
+  margin-bottom: 4px;
   transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
 .exercise-card::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: var(--accent); border-radius: 0 2px 2px 0;
+  background: var(--accent); border-radius: 0 2px 2px 0; opacity: 0.5;
+}
+.exercise-card.ex-done {
   opacity: 0.5;
 }
-.exercise-card.completed::before { background: var(--green); opacity: 1; }
+.exercise-card.ex-done::before { background: var(--green); opacity: 1; }
 .exercise-card.active-exercise {
-  border-color: var(--accent);
-  box-shadow: 0 0 30px var(--accent-glow);
+  border-color: var(--accent); box-shadow: 0 0 25px var(--accent-glow);
+  opacity: 1;
 }
 .exercise-card.active-exercise::before { opacity: 1; animation: pulse-bar 1.5s infinite; }
-.exercise-card.dragging { opacity: 0.5; transform: scale(0.96); }
+.exercise-card.completed::before { background: var(--green); opacity: 1; }
+.exercise-card.dragging { opacity: 0.4; transform: scale(0.96); }
 .exercise-card.drag-over { border-color: var(--accent); border-style: dashed; }
 
-@keyframes pulse-bar {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+@keyframes pulse-bar { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* Layout: flex row with exercise icon */
+.exercise-row {
+  display: flex; gap: 6px; align-items: center;
+}
+.exercise-icon {
+  flex-shrink: 0; width: 28px; height: 28px; display: flex;
+  align-items: center; justify-content: center;
+}
+.exercise-icon svg { width: 28px; height: 28px; }
+.exercise-body { flex: 1; min-width: 0; }
+
+/* Check button */
+.btn-check {
+  width: 24px; height: 24px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; border: 2px solid var(--text3);
+  background: none; color: transparent;
+  cursor: pointer; transition: all 0.25s; font-size: 12px;
+}
+.btn-check:active { transform: scale(0.85); }
+.btn-check.checked {
+  border-color: var(--green); background: var(--green); color: white;
 }
 
-/* Drag handle */
-.drag-handle {
-  position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
-  width: 20px; display: flex; flex-direction: column; align-items: center;
-  gap: 2px; cursor: grab; padding: 10px 4px; opacity: 0.3;
-  transition: opacity 0.2s;
-}
-.drag-handle:active { cursor: grabbing; }
-.drag-handle span { width: 12px; height: 2px; background: var(--text3); border-radius: 1px; }
-.exercise-card:hover .drag-handle { opacity: 0.6; }
-
-.exercise-content { margin-left: 18px; }
+.exercise-content { margin-left: 0; }
 
 .exercise-top {
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
+  display: flex; align-items: center; gap: 4px; flex-wrap: nowrap;
 }
 .exercise-name {
-  font-size: 15px; font-weight: 700; color: var(--text);
+  font-size: 12px; font-weight: 700; color: var(--text);
   flex: 1; min-width: 0;
 }
 .exercise-name input {
   background: none; border: none; color: var(--text);
-  font: inherit; width: 100%; outline: none;
-  padding: 2px 0;
+  font: inherit; width: 100%; outline: none; padding: 1px 0;
 }
 .exercise-name input:focus { border-bottom: 1px solid var(--accent); }
+.ex-done .exercise-name input { text-decoration: line-through; color: var(--text3); }
 
-.exercise-actions { display: flex; gap: 4px; flex-shrink: 0; }
-.btn-icon {
-  width: 28px; height: 28px;
+.exercise-actions { display: flex; gap: 3px; flex-shrink: 0; position: relative; }
+.exercise-actions .action-btns {
+  display: none; gap: 3px; position: absolute; right: 0; top: 100%;
+  background: var(--surface2); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 4px; z-index: 10; margin-top: 2px;
+}
+.exercise-actions .action-btns.open { display: flex; }
+.btn-more {
+  width: 24px; height: 24px;
   display: flex; align-items: center; justify-content: center;
-  background: var(--surface2); border: none; border-radius: 8px;
-  color: var(--text3); cursor: pointer; font-size: 12px;
+  background: none; border: none; border-radius: 6px;
+  color: var(--text3); cursor: pointer; font-size: 14px;
+  transition: all 0.2s;
+}
+.btn-more:active { transform: scale(0.9); }
+.btn-icon {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface3); border: none; border-radius: 6px;
+  color: var(--text3); cursor: pointer; font-size: 10px;
   transition: all 0.2s;
 }
 .btn-icon:active { transform: scale(0.9); }
-.btn-icon.btn-up:hover, .btn-icon.btn-down:hover { color: var(--accent2); background: rgba(108,92,231,0.15); }
-.btn-icon.btn-dup:hover { color: var(--green); background: rgba(0,184,148,0.15); }
-.btn-icon.btn-del:hover { color: var(--red); background: rgba(225,112,85,0.15); }
+.btn-icon.btn-up:hover,.btn-icon.btn-down:hover { color: var(--accent2); }
+.btn-icon.btn-dup:hover { color: var(--green); }
+.btn-icon.btn-del:hover { color: var(--red); }
 
 .exercise-meta {
-  display: flex; align-items: center; gap: 8px;
-  margin-top: 8px; flex-wrap: wrap;
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-left: 6px; flex-wrap: wrap;
 }
 .meta-tag {
-  display: flex; align-items: center; gap: 4px;
-  background: var(--surface2); padding: 5px 10px;
-  border-radius: 8px; font-size: 12px; color: var(--text2);
+  display: flex; align-items: center; gap: 2px;
+  background: var(--surface2); padding: 2px 6px;
+  border-radius: 5px; font-size: 10px; color: var(--text2);
 }
 .meta-tag input {
   background: none; border: none; color: var(--accent2);
-  font: inherit; font-weight: 600; width: 60px; outline: none;
+  font: inherit; font-weight: 600; width: 48px; outline: none;
   text-align: center;
 }
-.meta-tag input:focus { color: white; }
-.meta-tag .label { color: var(--text3); font-size: 11px; margin-right: 2px; }
+.meta-tag .label { color: var(--text3); font-size: 9px; }
 
-/* Sets display */
+/* Sets */
 .sets-row {
-  display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap;
-  align-items: center;
+  display: flex; gap: 3px; margin-top: 4px; flex-wrap: wrap; align-items: center;
 }
 .set-chip {
-  width: 42px; height: 42px;
+  width: 32px; height: 30px;
   display: flex; align-items: center; justify-content: center;
   border-radius: var(--radius-sm);
   background: var(--surface2);
   border: 1px solid rgba(255,255,255,0.06);
-  font-size: 14px; font-weight: 700; color: var(--text2);
-  cursor: pointer; transition: all 0.2s;
-  position: relative;
+  font-size: 12px; font-weight: 700; color: var(--text2);
+  cursor: pointer; transition: all 0.2s; position: relative;
 }
 .set-chip input {
   background: none; border: none; color: inherit;
@@ -244,115 +247,89 @@ body {
   width: 100%; height: 100%; text-align: center; outline: none;
 }
 .set-chip.done {
-  background: rgba(0, 184, 148, 0.15);
-  border-color: rgba(0, 184, 148, 0.3);
-  color: var(--green);
+  background: rgba(0,184,148,0.15);
+  border-color: rgba(0,184,148,0.3); color: var(--green);
 }
 .set-chip.current {
-  background: rgba(108, 92, 231, 0.15);
-  border-color: var(--accent);
-  color: white;
+  background: rgba(108,92,231,0.15);
+  border-color: var(--accent); color: white;
   animation: pulse-set 1.5s infinite;
 }
 @keyframes pulse-set {
-  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
-  50% { box-shadow: 0 0 15px 3px var(--accent-glow); }
+  0%,100%{box-shadow:0 0 0 0 var(--accent-glow)}
+  50%{box-shadow:0 0 12px 2px var(--accent-glow)}
 }
-
-/* Long press to remove set */
 .set-chip .set-remove {
-  display: none; position: absolute; top: -6px; right: -6px;
-  width: 18px; height: 18px; border-radius: 50%;
-  background: var(--red); color: white; font-size: 10px;
+  display: none; position: absolute; top: -5px; right: -5px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--red); color: white; font-size: 9px;
   align-items: center; justify-content: center;
-  cursor: pointer; z-index: 2;
-  border: 2px solid var(--surface);
+  cursor: pointer; z-index: 2; border: 2px solid var(--surface);
 }
 .sets-editing .set-chip .set-remove { display: flex; }
 .sets-editing .set-chip { animation: wiggle 0.3s infinite alternate; }
-@keyframes wiggle {
-  from { transform: rotate(-1deg); }
-  to { transform: rotate(1deg); }
-}
+@keyframes wiggle { from{transform:rotate(-1deg)} to{transform:rotate(1deg)} }
 
-.set-actions {
-  display: flex; gap: 4px; align-items: center; margin-left: 2px;
-}
+.set-actions { display: flex; gap: 3px; align-items: center; margin-left: 2px; }
 .set-btn {
-  width: 32px; height: 42px; display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 30px; display: flex; align-items: center; justify-content: center;
   border-radius: var(--radius-sm);
   border: 1px dashed var(--text3); color: var(--text3);
-  cursor: pointer; font-size: 16px; transition: all 0.2s;
-  background: none;
+  cursor: pointer; font-size: 14px; background: none;
 }
 .set-btn:hover { border-color: var(--accent); color: var(--accent); }
 .set-btn.set-edit-toggle {
-  font-size: 11px; width: auto; padding: 0 8px;
+  font-size: 10px; width: auto; padding: 0 6px;
   border-style: solid; border-color: rgba(255,255,255,0.06);
 }
-.set-btn.set-edit-toggle.active {
-  border-color: var(--red); color: var(--red);
-  background: rgba(225,112,85,0.1);
-}
+.set-btn.set-edit-toggle.active { border-color: var(--red); color: var(--red); background: rgba(225,112,85,0.1); }
 
 .exercise-note {
-  font-size: 11px; color: var(--text3); margin-top: 6px; font-style: italic;
+  font-size: 9px; color: var(--text3); margin-top: 2px; font-style: italic;
 }
 .exercise-note input {
   background: none; border: none; color: var(--text3);
   font: inherit; font-style: italic; width: 100%; outline: none;
 }
-.exercise-note input:focus { color: var(--text2); }
 
 /* Workout controls */
 .workout-controls {
   position: fixed; bottom: 0; left: 0; right: 0;
-  padding: 12px 20px; padding-bottom: max(14px, env(safe-area-inset-bottom));
+  padding: 10px 16px; padding-bottom: max(12px, env(safe-area-inset-bottom));
   background: rgba(10,10,15,0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255,255,255,0.05);
-  z-index: 100;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255,255,255,0.05); z-index: 100;
 }
-
 .btn-start {
-  width: 100%; padding: 16px;
+  width: 100%; padding: 14px;
   border: none; border-radius: var(--radius);
-  font-family: inherit; font-size: 16px; font-weight: 800;
+  font-family: inherit; font-size: 15px; font-weight: 800;
   letter-spacing: 2px; text-transform: uppercase;
   cursor: pointer; transition: all 0.3s;
   background: linear-gradient(135deg, var(--accent), #8b7cf7);
-  color: white;
-  box-shadow: 0 4px 25px var(--accent-glow);
+  color: white; box-shadow: 0 4px 25px var(--accent-glow);
 }
 .btn-start:active { transform: scale(0.97); }
 .btn-start.running {
   background: linear-gradient(135deg, var(--green), #55efc4);
   box-shadow: 0 4px 25px var(--green-glow);
 }
-
-/* Timer bar */
 .timer-bar {
-  display: none;
-  align-items: center; justify-content: space-between;
-  margin-bottom: 10px; gap: 12px;
+  display: none; align-items: center; justify-content: space-between;
+  margin-bottom: 8px; gap: 10px;
 }
 .timer-bar.visible { display: flex; }
 .timer-display {
-  font-size: 32px; font-weight: 900; font-variant-numeric: tabular-nums;
-  color: var(--green);
+  font-size: 28px; font-weight: 900; font-variant-numeric: tabular-nums; color: var(--green);
 }
-.timer-label {
-  font-size: 10px; color: var(--text3); letter-spacing: 1px; text-transform: uppercase;
-}
+.timer-label { font-size: 9px; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; }
 
 /* Add exercise */
 .add-exercise {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 14px; margin: 6px 16px 10px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 10px; margin: 4px 12px 8px;
   border: 1px dashed var(--text3); border-radius: var(--radius);
-  color: var(--text3); font-size: 13px; font-weight: 500;
-  cursor: pointer; transition: all 0.2s;
+  color: var(--text3); font-size: 12px; font-weight: 500; cursor: pointer;
 }
 .add-exercise:hover { border-color: var(--accent); color: var(--accent); }
 
@@ -364,95 +341,74 @@ body {
 }
 .rest-overlay.visible { display: flex; }
 .rest-overlay .rest-label {
-  font-size: 14px; color: var(--text3); letter-spacing: 3px;
-  text-transform: uppercase; margin-bottom: 12px;
+  font-size: 13px; color: var(--text3); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px;
 }
-.rest-overlay .rest-next {
-  font-size: 16px; color: var(--text2); margin-top: 20px;
-}
+.rest-overlay .rest-next { font-size: 15px; color: var(--text2); margin-top: 18px; }
 .rest-overlay .rest-next strong { color: var(--text); }
 .rest-skip {
-  margin-top: 32px; padding: 14px 40px;
+  margin-top: 28px; padding: 12px 36px;
   background: var(--surface2); border: 1px solid var(--text3);
   border-radius: 50px; color: var(--text); font-family: inherit;
-  font-size: 14px; font-weight: 600; cursor: pointer;
-  transition: all 0.2s;
+  font-size: 13px; font-weight: 600; cursor: pointer;
 }
 .rest-skip:active { transform: scale(0.95); }
-.rest-progress-ring {
-  width: 200px; height: 200px; position: relative;
-  margin-bottom: 8px;
-}
+.rest-progress-ring { width: 180px; height: 180px; position: relative; margin-bottom: 6px; }
 .rest-progress-ring svg { transform: rotate(-90deg); }
 .rest-progress-ring circle { fill: none; stroke-width: 4; }
 .rest-progress-ring .bg { stroke: var(--surface2); }
-.rest-progress-ring .fg {
-  stroke: var(--orange); stroke-linecap: round;
-  transition: stroke-dashoffset 1s linear;
-}
+.rest-progress-ring .fg { stroke: var(--orange); stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
 .rest-progress-ring .time-text {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 56px; font-weight: 900; color: var(--orange);
-  font-variant-numeric: tabular-nums;
+  font-size: 50px; font-weight: 900; color: var(--orange); font-variant-numeric: tabular-nums;
 }
 
-/* Bottom sheet modal */
+/* Modal */
 .modal-overlay {
   display: none; position: fixed; inset: 0; z-index: 200;
-  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
   align-items: flex-end; justify-content: center;
 }
 .modal-overlay.open { display: flex; }
 .modal {
-  background: var(--surface);
-  border-radius: 20px 20px 0 0;
-  padding: 20px; padding-bottom: max(20px, env(safe-area-inset-bottom));
-  width: 100%; max-width: 500px;
-  animation: slide-up 0.25s ease;
+  background: var(--surface); border-radius: 20px 20px 0 0;
+  padding: 18px; padding-bottom: max(18px, env(safe-area-inset-bottom));
+  width: 100%; max-width: 500px; animation: slide-up 0.25s ease;
 }
-@keyframes slide-up {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-.modal-handle {
-  width: 36px; height: 4px; background: var(--text3); border-radius: 2px;
-  margin: 0 auto 16px; opacity: 0.5;
-}
-.modal h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+@keyframes slide-up { from{transform:translateY(100%)} to{transform:translateY(0)} }
+.modal-handle { width: 36px; height: 4px; background: var(--text3); border-radius: 2px; margin: 0 auto 14px; opacity: 0.5; }
+.modal h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
 .modal-option {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px 12px; border-radius: var(--radius-sm);
-  cursor: pointer; transition: background 0.2s;
-  color: var(--text2); font-size: 14px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 10px; border-radius: var(--radius-sm);
+  cursor: pointer; color: var(--text2); font-size: 13px;
 }
 .modal-option:active { background: var(--surface2); }
 .modal-option .mo-icon {
-  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-  border-radius: 10px; background: var(--surface2); font-size: 16px;
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; background: var(--surface2); font-size: 14px;
 }
 .modal-option.danger { color: var(--red); }
 .modal-option.danger .mo-icon { background: rgba(225,112,85,0.15); }
-.modal-sep { height: 1px; background: rgba(255,255,255,0.05); margin: 4px 0; }
+.modal-sep { height: 1px; background: rgba(255,255,255,0.05); margin: 2px 0; }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 0; }
+.fade-in { animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} }
 
-/* Animations */
-.fade-in { animation: fadeIn 0.3s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } }
-
-/* Toast */
 .toast {
-  position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%);
-  background: var(--surface3); color: var(--text); padding: 10px 20px;
-  border-radius: 50px; font-size: 13px; font-weight: 500;
+  position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%);
+  background: var(--surface3); color: var(--text); padding: 8px 18px;
+  border-radius: 50px; font-size: 12px; font-weight: 500;
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  z-index: 300; opacity: 0; transition: opacity 0.3s;
-  pointer-events: none;
+  z-index: 300; opacity: 0; transition: opacity 0.3s; pointer-events: none;
 }
 .toast.show { opacity: 1; }
+
+.empty-state {
+  text-align: center; padding: 30px 20px; color: var(--text3);
+}
+.empty-state .empty-icon { font-size: 36px; margin-bottom: 10px; }
 </style>
 </head>
 <body>
@@ -467,26 +423,21 @@ body {
   </div>
 </div>
 
-<div class="tabs-container">
-  <div class="tabs" id="tabs"></div>
-</div>
+<div class="tabs-container"><div class="tabs" id="tabs"></div></div>
 <div class="day-info" id="dayInfo"></div>
 <div class="rest-config" id="restConfig"></div>
-
 <div id="exerciseList" class="exercise-list"></div>
-
 <div class="add-exercise" onclick="addExercise()">
-  <span style="font-size:20px">+</span> Agregar ejercicio
+  <span style="font-size:18px">+</span> Agregar ejercicio
 </div>
 
-<!-- Rest overlay -->
 <div class="rest-overlay" id="restOverlay">
   <div class="rest-label">DESCANSO</div>
   <div class="rest-progress-ring">
-    <svg width="200" height="200" viewBox="0 0 200 200">
-      <circle class="bg" cx="100" cy="100" r="90"/>
-      <circle class="fg" id="restRingFg" cx="100" cy="100" r="90"
-        stroke-dasharray="565.48" stroke-dashoffset="0"/>
+    <svg width="180" height="180" viewBox="0 0 180 180">
+      <circle class="bg" cx="90" cy="90" r="80"/>
+      <circle class="fg" id="restRingFg" cx="90" cy="90" r="80"
+        stroke-dasharray="502.65" stroke-dashoffset="0"/>
     </svg>
     <div class="time-text" id="restTimeDisplay">90</div>
   </div>
@@ -494,40 +445,32 @@ body {
   <button class="rest-skip" onclick="skipRest()">SALTAR DESCANSO</button>
 </div>
 
-<!-- Settings modal -->
 <div class="modal-overlay" id="settingsModal" onclick="if(event.target===this)closeModal('settingsModal')">
   <div class="modal">
     <div class="modal-handle"></div>
     <h3>Opciones</h3>
     <div class="modal-option" onclick="duplicateDay();closeModal('settingsModal')">
-      <div class="mo-icon">📋</div>
-      <div>Duplicar día actual</div>
+      <div class="mo-icon">📋</div><div>Duplicar día actual</div>
     </div>
     <div class="modal-option" onclick="renameDayPrompt();closeModal('settingsModal')">
-      <div class="mo-icon">✏️</div>
-      <div>Renombrar día</div>
+      <div class="mo-icon">✏️</div><div>Renombrar día</div>
     </div>
     <div class="modal-sep"></div>
     <div class="modal-option" onclick="exportData();closeModal('settingsModal')">
-      <div class="mo-icon">💾</div>
-      <div>Exportar rutinas (JSON)</div>
+      <div class="mo-icon">💾</div><div>Exportar rutinas (JSON)</div>
     </div>
     <div class="modal-option" onclick="importData();closeModal('settingsModal')">
-      <div class="mo-icon">📂</div>
-      <div>Importar rutinas</div>
+      <div class="mo-icon">📂</div><div>Importar rutinas</div>
     </div>
     <div class="modal-sep"></div>
     <div class="modal-option danger" onclick="resetAllData();closeModal('settingsModal')">
-      <div class="mo-icon">🗑</div>
-      <div>Resetear todo a valores iniciales</div>
+      <div class="mo-icon">🗑</div><div>Resetear todo</div>
     </div>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Bottom controls -->
 <div class="workout-controls">
   <div class="timer-bar" id="timerBar">
     <div>
@@ -535,50 +478,395 @@ body {
       <div class="timer-display" id="timerDisplay">00:00</div>
     </div>
   </div>
-  <button class="btn-start" id="btnStart" onclick="toggleWorkout()">
-    EMPEZAR RUTINA
-  </button>
+  <button class="btn-start" id="btnStart" onclick="toggleWorkout()">EMPEZAR RUTINA</button>
 </div>
 
-<!-- Hidden file input for import -->
 <input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleImport(event)">
 
 <script>
+// ==================== EXERCISE ICON SYSTEM ====================
+// Small 28x28 SVGs representing each exercise visually
+
+const EXERCISE_ICONS = {
+  // Barbell squat - person squatting with bar
+  'sentadilla': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="4" r="2.5" fill="#a0a0b0"/>
+    <line x1="4" y1="7" x2="24" y2="7" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="3" cy="7" r="2" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="25" cy="7" r="2" fill="#6c5ce7" opacity="0.7"/>
+    <path d="M14 7 L14 14 L9 21 M14 14 L19 21" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="11" y1="9" x2="17" y2="9" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Barbell row - bent over with bar
+  'remo': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="10" cy="5" r="2.5" fill="#a0a0b0"/>
+    <path d="M10 8 L14 16 L10 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14 " y1="16" x2="19" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="16" x2="8" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="4" y1="20" x2="22" y2="20" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="3" cy="20" r="2" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="23" cy="20" r="2" fill="#6c5ce7" opacity="0.7"/>
+  </svg>`,
+  // Bench press - person on bench
+  'press plano': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="16" width="20" height="3" rx="1.5" fill="#3a3a4a"/>
+    <circle cx="14" cy="14" r="2.5" fill="#a0a0b0"/>
+    <rect x="8" y="15" width="12" height="2" rx="1" fill="#a0a0b0" opacity="0.5"/>
+    <line x1="3" y1="8" x2="25" y2="8" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="2" cy="8" r="2" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="26" cy="8" r="2" fill="#6c5ce7" opacity="0.7"/>
+    <line x1="10" y1="14" x2="7" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="14" x2="21" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="12" y="19" width="1.5" height="6" rx="0.5" fill="#3a3a4a"/>
+    <rect x="14.5" y="19" width="1.5" height="6" rx="0.5" fill="#3a3a4a"/>
+  </svg>`,
+  // Leg curl machine
+  'isquios': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="3" y="10" width="18" height="3" rx="1.5" fill="#3a3a4a"/>
+    <circle cx="8" cy="8" r="2.5" fill="#a0a0b0"/>
+    <path d="M8 10 L8 13 L18 13" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 13 L22 8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="20" y="6" width="5" height="4" rx="1" fill="#6c5ce7" opacity="0.6"/>
+    <rect x="3" y="13" width="2" height="10" rx="1" fill="#3a3a4a"/>
+  </svg>`,
+  // Overhead press - person pressing bar overhead
+  'press militar': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="10" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="13" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="10" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="5" y1="4" x2="23" y2="4" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="4" cy="4" r="2" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="24" cy="4" r="2" fill="#6c5ce7" opacity="0.7"/>
+    <line x1="10" y1="13" x2="7" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="13" x2="21" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Hip abduction machine
+  'abductores': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="5" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="8" x2="14" y2="15" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="15" x2="6" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="15" x2="22" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M6 23 L3 23 M22 23 L25 23" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+  </svg>`,
+  // Hip adduction
+  'aductores': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="5" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="8" x2="14" y2="15" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="15" x2="10" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="15" x2="18" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M8 19 L14 22 L20 19" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  </svg>`,
+  // Lat pulldown
+  'dorsales': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="4" y1="3" x2="24" y2="3" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round"/>
+    <line x1="14" y1="3" x2="14" y2="6" stroke="#3a3a4a" stroke-width="1.5"/>
+    <path d="M8 6 L14 6 L20 6" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="14" cy="11" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="14" x2="14" y2="21" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="10" y1="14" x2="8" y2="7" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="14" x2="20" y2="7" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="10" y1="23" x2="14" y2="21" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="23" x2="14" y2="21" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Pull-up bar
+  'dominadas': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="3" y1="3" x2="25" y2="3" stroke="#6c5ce7" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="14" cy="9" r="2.5" fill="#a0a0b0"/>
+    <line x1="10" y1="9" x2="8" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="9" x2="20" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="12" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="11" y1="23" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="17" y1="23" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Dumbbell curl
+  'biceps': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="3" width="8" height="3" rx="1" fill="#6c5ce7"/>
+    <rect x="12" y="1" width="4" height="7" rx="1" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="14" cy="14" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="17" x2="14" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="14" x2="20" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 14 L9 10 L14 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  </svg>`,
+  // Shrug with dumbbells
+  'trapecios': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="5" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="8" x2="14" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="10" y1="8" x2="6" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="8" x2="22" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="3" y="15" width="6" height="3" rx="1" fill="#6c5ce7"/>
+    <rect x="19" y="15" width="6" height="3" rx="1" fill="#6c5ce7"/>
+    <path d="M11 6 L14 3 L17 6" stroke="#e17055" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  </svg>`,
+  // Dips on parallel bars
+  'fondos': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="5" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="8" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="10" y1="8" x2="6" y2="12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="8" x2="22" y2="12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="3" y1="12" x2="25" y2="12" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <line x1="11" y1="18" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="17" y1="18" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Hip thrust
+  'hip thrust': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="14" width="10" height="4" rx="2" fill="#3a3a4a"/>
+    <circle cx="16" cy="10" r="2.5" fill="#a0a0b0"/>
+    <path d="M12 14 L16 10 L16 14 L20 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <line x1="10" y1="11" x2="22" y2="11" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="9" cy="11" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="23" cy="11" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+  </svg>`,
+  // Abs crunch
+  'abdominales': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="18" cy="8" r="2.5" fill="#a0a0b0"/>
+    <path d="M18 11 Q14 14 12 18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M12 18 L8 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M12 18 L16 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="8" y="13" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.6"/>
+    <rect x="8" y="16" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.6"/>
+    <rect x="12" y="13" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.6"/>
+    <rect x="12" y="16" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.6"/>
+  </svg>`,
+  // Deadlift
+  'peso muerto': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="4" r="2.5" fill="#a0a0b0"/>
+    <path d="M14 7 L14 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 14 L10 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 14 L18 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="10" y1="7" x2="7" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="7" x2="21" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="4" y1="19" x2="24" y2="19" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="3" cy="19" r="2" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="25" cy="19" r="2" fill="#6c5ce7" opacity="0.7"/>
+  </svg>`,
+  // Leg press machine
+  'prensa': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="8" cy="8" r="2.5" fill="#a0a0b0"/>
+    <path d="M8 11 L8 16 L16 12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <rect x="16" y="8" width="8" height="8" rx="2" fill="#6c5ce7" opacity="0.5"/>
+    <line x1="16" y1="12" x2="24" y2="12" stroke="#6c5ce7" stroke-width="1.5"/>
+    <path d="M8 16 L6 22 M8 16 L10 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Leg extension
+  'cuadriceps': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="8" width="12" height="4" rx="2" fill="#3a3a4a"/>
+    <circle cx="10" cy="6" r="2.5" fill="#a0a0b0"/>
+    <path d="M10 8 L10 12 L18 18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <rect x="17" y="16" width="6" height="4" rx="1" fill="#6c5ce7" opacity="0.6"/>
+    <rect x="4" y="12" width="2" height="10" rx="1" fill="#3a3a4a"/>
+  </svg>`,
+  // Chest fly
+  'apertura': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="10" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="13" x2="14" y2="22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 13 Q4 10 4 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M18 13 Q24 10 24 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <rect x="2" y="4" width="4" height="3" rx="1" fill="#6c5ce7"/>
+    <rect x="22" y="4" width="4" height="3" rx="1" fill="#6c5ce7"/>
+  </svg>`,
+  // Lateral raise
+  'vuelos laterales': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="8" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="11" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="10" y1="11" x2="4" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="11" x2="24" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="2" y="6" width="3" height="4" rx="1" fill="#6c5ce7"/>
+    <rect x="23" y="6" width="3" height="4" rx="1" fill="#6c5ce7"/>
+    <line x1="11" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="17" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Barbell curl (W bar)
+  'biceps barra': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="6" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="9" x2="14" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 9 L8 14 L14 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M18 9 L20 14 L14 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M5 16 L9 15 L12 16 L16 16 L19 15 L23 16" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <circle cx="4" cy="16" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="24" cy="16" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+  </svg>`,
+  // Triceps pushdown
+  'triceps': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="14" y1="2" x2="14" y2="6" stroke="#3a3a4a" stroke-width="1.5"/>
+    <line x1="9" y1="6" x2="19" y2="6" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="14" cy="10" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="13" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 10 L10 7" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 10 L18 7" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="11" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="17" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Bulgarian split squat
+  'sentadilla bulgara': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="10" cy="4" r="2.5" fill="#a0a0b0"/>
+    <line x1="10" y1="7" x2="10" y2="14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 14 L7 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 14 L16 18 L20 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <rect x="19" y="14" width="6" height="3" rx="1.5" fill="#3a3a4a"/>
+  </svg>`,
+  // Face pull with rope
+  'face pull': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="22" y="3" width="3" height="22" rx="1.5" fill="#3a3a4a"/>
+    <circle cx="10" cy="8" r="2.5" fill="#a0a0b0"/>
+    <line x1="10" y1="11" x2="10" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="11" x2="22" y2="10" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="8" x2="22" y2="10" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 8 L14 11" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Calf raise
+  'gemelos': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="4" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="7" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="12" y1="16" x2="12" y2="22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="16" y1="16" x2="16" y2="22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <ellipse cx="12" cy="19" rx="2" ry="3" fill="#e17055" opacity="0.5"/>
+    <ellipse cx="16" cy="19" rx="2" ry="3" fill="#e17055" opacity="0.5"/>
+    <rect x="8" y="22" width="12" height="3" rx="1" fill="#3a3a4a"/>
+    <path d="M11 22 L11 20 M17 22 L17 20" stroke="#a0a0b0" stroke-width="1" stroke-linecap="round"/>
+  </svg>`,
+  // Incline press
+  'press inclinado': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5 22 L10 10 L16 10 L16 22" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <circle cx="13" cy="8" r="2.5" fill="#a0a0b0"/>
+    <line x1="4" y1="4" x2="22" y2="4" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="3" cy="4" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="23" cy="4" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+    <line x1="10" y1="8" x2="7" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="16" y1="8" x2="19" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Cable pulldown
+  'jalon': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="4" y1="3" x2="24" y2="3" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round"/>
+    <line x1="14" y1="3" x2="14" y2="7" stroke="#3a3a4a" stroke-width="1.5"/>
+    <line x1="8" y1="7" x2="20" y2="7" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="14" cy="12" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="15" x2="14" y2="22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="10" y1="12" x2="9" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="12" x2="19" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Cable row
+  'remo polea': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="22" y="5" width="3" height="18" rx="1.5" fill="#3a3a4a"/>
+    <circle cx="10" cy="8" r="2.5" fill="#a0a0b0"/>
+    <line x1="10" y1="11" x2="10" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="11" x2="22" y2="14" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 11 L14 11" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 16 L7 22 M10 16 L13 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Plank position
+  'plancha': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="22" cy="10" r="2.5" fill="#a0a0b0"/>
+    <line x1="5" y1="14" x2="20" y2="12" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
+    <line x1="20" y1="12" x2="20" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="5" y1="14" x2="5" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Romanian deadlift
+  'peso muerto rumano': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="4" r="2.5" fill="#a0a0b0"/>
+    <path d="M12 7 Q14 12 16 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <line x1="12" y1="10" x2="18" y2="10" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 7 L8 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 7 L16 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="4" y1="15" x2="20" y2="15" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="3" cy="15" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="21" cy="15" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+    <line x1="16" y1="16" x2="14" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="16" y1="16" x2="18" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Walking lunge
+  'zancadas': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="4" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="7" x2="14" y2="15" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 15 L8 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 15 L20 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="8" y1="23" x2="5" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Generic dumbbell (fallback)
+  '_default': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="3" y="10" width="5" height="8" rx="1.5" fill="#6c5ce7"/>
+    <rect x="20" y="10" width="5" height="8" rx="1.5" fill="#6c5ce7"/>
+    <rect x="1" y="12" width="3" height="4" rx="1" fill="#6c5ce7" opacity="0.6"/>
+    <rect x="24" y="12" width="3" height="4" rx="1" fill="#6c5ce7" opacity="0.6"/>
+    <line x1="8" y1="14" x2="20" y2="14" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+  </svg>`,
+};
+
+// Aliases
+EXERCISE_ICONS['remo en barra'] = EXERCISE_ICONS['remo'];
+EXERCISE_ICONS['press banca'] = EXERCISE_ICONS['press plano'];
+EXERCISE_ICONS['bíceps mancuernas'] = EXERCISE_ICONS['biceps'];
+EXERCISE_ICONS['biceps mancuernas'] = EXERCISE_ICONS['biceps'];
+EXERCISE_ICONS['hip thrusts'] = EXERCISE_ICONS['hip thrust'];
+EXERCISE_ICONS['hipthrusts'] = EXERCISE_ICONS['hip thrust'];
+EXERCISE_ICONS['abs'] = EXERCISE_ICONS['abdominales'];
+EXERCISE_ICONS['sentadilla búlgara'] = EXERCISE_ICONS['sentadilla bulgara'];
+EXERCISE_ICONS['elevaciones laterales'] = EXERCISE_ICONS['vuelos laterales'];
+EXERCISE_ICONS['bíceps barra w'] = EXERCISE_ICONS['biceps barra'];
+EXERCISE_ICONS['biceps barra w'] = EXERCISE_ICONS['biceps barra'];
+EXERCISE_ICONS['tríceps'] = EXERCISE_ICONS['triceps'];
+EXERCISE_ICONS['face pulls'] = EXERCISE_ICONS['face pull'];
+EXERCISE_ICONS['pantorrillas'] = EXERCISE_ICONS['gemelos'];
+EXERCISE_ICONS['curl'] = EXERCISE_ICONS['biceps'];
+EXERCISE_ICONS['jalón'] = EXERCISE_ICONS['jalon'];
+EXERCISE_ICONS['lunges'] = EXERCISE_ICONS['zancadas'];
+EXERCISE_ICONS['apertura inclinada'] = EXERCISE_ICONS['apertura'];
+EXERCISE_ICONS['cuádriceps'] = EXERCISE_ICONS['cuadriceps'];
+
+function getExerciseIcon(exerciseName) {
+  const name = exerciseName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  // Exact match
+  for (const [key, svg] of Object.entries(EXERCISE_ICONS)) {
+    if (key === '_default') continue;
+    const normKey = key.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    if (name === normKey || name.includes(normKey) || normKey.includes(name)) return svg;
+  }
+  // Partial match
+  for (const [key, svg] of Object.entries(EXERCISE_ICONS)) {
+    if (key === '_default') continue;
+    const normKey = key.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const words = normKey.split(' ');
+    if (words.some(w => w.length > 3 && name.includes(w))) return svg;
+  }
+  return EXERCISE_ICONS['_default'];
+}
+
+
 // ==================== DEFAULT DATA ====================
 const DEFAULT_DATA = {
   days: [
     {
       name: "DÍA 1", subtitle: "Full Body A", restTime: 90,
       exercises: [
-        { name: "Sentadilla", weight: "60 kg", sets: [8,8,8,8], note: "" },
-        { name: "Remo en barra", weight: "", sets: [8,8,8], note: "o polea" },
-        { name: "Press plano", weight: "30+10 barra", sets: [8,8,8,8], note: "" },
-        { name: "Isquios", weight: "", sets: [10,10,10], note: "" },
-        { name: "Press militar", weight: "", sets: [8,8,8,8], note: "" },
-        { name: "Abductores", weight: "30 kg", sets: [8,8,8], note: "" },
-        { name: "Aductores", weight: "30 kg", sets: [8,8,8], note: "" },
-        { name: "Dorsales", weight: "40 kg", sets: [10,10,10], note: "o dominadas" },
-        { name: "Bíceps mancuernas", weight: "", sets: [8,8,8,8], note: "" },
-        { name: "Trapecios", weight: "25 kg", sets: [8,8,8], note: "" },
-        { name: "Fondos", weight: "", sets: [8,8,8], note: "" },
-        { name: "Hip Thrusts", weight: "", sets: [8,8,8,8], note: "" },
-        { name: "Abdominales", weight: "", sets: [], note: "Al final" }
+        { name: "Sentadilla", weight: "60 kg", sets: [8,8,8,8], note: "", done: false },
+        { name: "Remo en barra", weight: "", sets: [8,8,8], note: "o polea", done: false },
+        { name: "Press plano", weight: "30+10 barra", sets: [8,8,8,8], note: "", done: false },
+        { name: "Isquios", weight: "", sets: [10,10,10], note: "", done: false },
+        { name: "Press militar", weight: "", sets: [8,8,8,8], note: "", done: false },
+        { name: "Abductores", weight: "30 kg", sets: [8,8,8], note: "", done: false },
+        { name: "Aductores", weight: "30 kg", sets: [8,8,8], note: "", done: false },
+        { name: "Dorsales", weight: "40 kg", sets: [10,10,10], note: "o dominadas", done: false },
+        { name: "Bíceps mancuernas", weight: "", sets: [8,8,8,8], note: "", done: false },
+        { name: "Trapecios", weight: "25 kg", sets: [8,8,8], note: "", done: false },
+        { name: "Fondos", weight: "", sets: [8,8,8], note: "", done: false },
+        { name: "Hip Thrusts", weight: "", sets: [8,8,8,8], note: "", done: false },
+        { name: "Abdominales", weight: "", sets: [], note: "Al final", done: false }
       ]
     },
     {
       name: "DÍA 2", subtitle: "Full Body B", restTime: 90,
       exercises: [
-        { name: "Peso muerto", weight: "", sets: [8,8,8,8], note: "" },
-        { name: "Prensa", weight: "", sets: [8,8,8], note: "" },
-        { name: "Cuádriceps", weight: "", sets: [8,8,8], note: "" },
-        { name: "Apertura inclinada", weight: "", sets: [8,8,8,8], note: "" },
-        { name: "Vuelos laterales", weight: "", sets: [8,8,8,8], note: "" },
-        { name: "Bíceps barra W", weight: "", sets: [8,8,8,8], note: "" },
-        { name: "Tríceps", weight: "", sets: [8,8,8], note: "polea, mancuerna o fondos" },
-        { name: "Sentadilla búlgara", weight: "", sets: [8,8,8], note: "opcional" },
-        { name: "Face pulls", weight: "", sets: [10,10,10], note: "" },
-        { name: "Gemelos", weight: "", sets: [12,12,12], note: "" },
-        { name: "Abdominales", weight: "", sets: [], note: "Al final" }
+        { name: "Peso muerto", weight: "", sets: [8,8,8,8], note: "", done: false },
+        { name: "Prensa", weight: "", sets: [8,8,8], note: "", done: false },
+        { name: "Cuádriceps", weight: "", sets: [8,8,8], note: "", done: false },
+        { name: "Apertura inclinada", weight: "", sets: [8,8,8,8], note: "", done: false },
+        { name: "Vuelos laterales", weight: "", sets: [8,8,8,8], note: "", done: false },
+        { name: "Bíceps barra W", weight: "", sets: [8,8,8,8], note: "", done: false },
+        { name: "Tríceps", weight: "", sets: [8,8,8], note: "polea, mancuerna o fondos", done: false },
+        { name: "Sentadilla búlgara", weight: "", sets: [8,8,8], note: "opcional", done: false },
+        { name: "Face pulls", weight: "", sets: [10,10,10], note: "", done: false },
+        { name: "Gemelos", weight: "", sets: [12,12,12], note: "", done: false },
+        { name: "Abdominales", weight: "", sets: [], note: "Al final", done: false }
       ]
     }
   ]
@@ -595,41 +883,34 @@ let currentSetIdx = -1;
 let setsCompleted = [];
 let restTimerInterval = null;
 let restSeconds = 0;
-let editingSetsIdx = -1; // which exercise has sets in edit mode
+let editingSetsIdx = -1;
 let dragSrcIdx = null;
 
 function loadData() {
   const saved = localStorage.getItem('boom_gym_data');
   if (saved) {
     const d = JSON.parse(saved);
-    // Ensure restTime exists on each day
-    d.days.forEach(day => { if (!day.restTime) day.restTime = 90; });
+    d.days.forEach(day => {
+      if (!day.restTime) day.restTime = 90;
+      day.exercises.forEach(ex => { if (ex.done === undefined) ex.done = false; });
+    });
     return d;
   }
   return JSON.parse(JSON.stringify(DEFAULT_DATA));
 }
 
-function saveData() {
-  localStorage.setItem('boom_gym_data', JSON.stringify(data));
-}
-
+function saveData() { localStorage.setItem('boom_gym_data', JSON.stringify(data)); }
 function toast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2000);
 }
 
 // ==================== RENDER ====================
-function renderAll() {
-  renderTabs();
-  renderDayInfo();
-  renderExercises();
-}
+function renderAll() { renderTabs(); renderDayInfo(); renderExercises(); }
 
 function renderTabs() {
-  const tabs = document.getElementById('tabs');
-  tabs.innerHTML = data.days.map((d, i) => `
+  document.getElementById('tabs').innerHTML = data.days.map((d, i) => `
     <div class="tab ${i === currentDay ? 'active' : ''}" onclick="switchDay(${i})">
       <span>${d.name}</span>
       ${data.days.length > 1 ? `<span class="tab-delete" onclick="event.stopPropagation();removeDay(${i})">✕</span>` : ''}
@@ -640,31 +921,26 @@ function renderTabs() {
 function renderDayInfo() {
   const day = data.days[currentDay];
   document.getElementById('dayInfo').innerHTML = `
-    <input value="${day.subtitle || ''}" placeholder="Subtítulo (ej: Full Body A)"
+    <input value="${day.subtitle||''}" placeholder="Subtítulo"
            onchange="data.days[${currentDay}].subtitle=this.value;saveData()">
     <div class="day-actions">
       <button class="btn-sm" onclick="duplicateDay()">Duplicar</button>
       <button class="btn-sm" onclick="renameDayPrompt()">Renombrar</button>
-    </div>
-  `;
+    </div>`;
   document.getElementById('restConfig').innerHTML = `
-    <span>Descanso entre ejercicios:</span>
-    <input type="number" inputmode="numeric" value="${day.restTime || 90}"
+    <span>Descanso:</span>
+    <input type="number" inputmode="numeric" value="${day.restTime||90}"
            onchange="data.days[${currentDay}].restTime=parseInt(this.value)||90;saveData()">
-    <span>seg</span>
-  `;
+    <span>seg</span>`;
 }
 
 function renderExercises() {
   const list = document.getElementById('exerciseList');
   const exercises = data.days[currentDay].exercises;
 
-  if (exercises.length === 0) {
-    list.innerHTML = `<div style="text-align:center;padding:40px 20px;color:var(--text3)">
-      <div style="font-size:40px;margin-bottom:12px">🏋️</div>
-      <div>No hay ejercicios aún</div>
-      <div style="font-size:12px;margin-top:4px">Tocá "Agregar ejercicio" para empezar</div>
-    </div>`;
+  if (!exercises.length) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🏋️</div>
+      <div>No hay ejercicios</div><div style="font-size:11px;margin-top:4px">Tocá + para empezar</div></div>`;
     return;
   }
 
@@ -672,465 +948,309 @@ function renderExercises() {
     const isActive = workoutActive && i === currentExerciseIdx;
     const isDone = workoutActive && setsCompleted[i] && setsCompleted[i].length > 0 && setsCompleted[i].every(s => s);
     const isEditingSets = editingSetsIdx === i;
-
     return `
-    <div class="exercise-card fade-in ${isActive ? 'active-exercise' : ''} ${isDone ? 'completed' : ''}"
+    <div class="exercise-card fade-in ${ex.done ? 'ex-done' : ''} ${isActive ? 'active-exercise' : ''} ${isDone ? 'completed' : ''}"
          style="animation-delay:${i*0.02}s" data-idx="${i}"
-         draggable="true"
-         ondragstart="onDragStart(event,${i})"
-         ondragover="onDragOver(event,${i})"
-         ondragleave="onDragLeave(event)"
-         ondrop="onDrop(event,${i})"
-         ondragend="onDragEnd(event)"
-         ontouchstart="onTouchDragStart(event,${i})">
-
-      <div class="drag-handle">
-        <span></span><span></span><span></span>
-      </div>
+         draggable="true" ondragstart="onDragStart(event,${i})" ondragover="onDragOver(event,${i})"
+         ondragleave="onDragLeave(event)" ondrop="onDrop(event,${i})" ondragend="onDragEnd(event)">
 
       <div class="exercise-content">
-        <div class="exercise-top">
-          <div class="exercise-name">
-            <input value="${escHtml(ex.name)}" onchange="updateField(${i},'name',this.value)"
-                   onfocus="this.select()" placeholder="Nombre del ejercicio">
+        <div class="exercise-row">
+          <div class="exercise-icon">
+            ${getExerciseIcon(ex.name)}
           </div>
-          <div class="exercise-actions">
-            ${i > 0 ? `<button class="btn-icon btn-up" onclick="moveExercise(${i},-1)" title="Subir">▲</button>` : ''}
-            ${i < exercises.length-1 ? `<button class="btn-icon btn-down" onclick="moveExercise(${i},1)" title="Bajar">▼</button>` : ''}
-            <button class="btn-icon btn-dup" onclick="duplicateExercise(${i})" title="Duplicar">⧉</button>
-            <button class="btn-icon btn-del" onclick="removeExercise(${i})" title="Eliminar">✕</button>
+          <div class="exercise-body">
+            <div class="exercise-top">
+              <button class="btn-check ${ex.done ? 'checked' : ''}" onclick="toggleDone(${i})">✓</button>
+              <div class="exercise-name">
+                <input value="${escHtml(ex.name)}" onchange="updateField(${i},'name',this.value)"
+                       onfocus="this.select()" placeholder="Nombre">
+              </div>
+              <div class="exercise-meta">
+                <div class="meta-tag">
+                  <span class="label">Peso</span>
+                  <input value="${escHtml(ex.weight)}" onchange="updateField(${i},'weight',this.value)" placeholder="—" onfocus="this.select()">
+                </div>
+                <div class="meta-tag">
+                  <span class="label">×${ex.sets.length}</span>
+                </div>
+              </div>
+              <div class="exercise-actions">
+                <button class="btn-more" onclick="toggleActions(event,${i})">⋯</button>
+                <div class="action-btns" id="actions-${i}">
+                  ${i > 0 ? `<button class="btn-icon btn-up" onclick="moveExercise(${i},-1)">▲</button>` : ''}
+                  ${i < exercises.length-1 ? `<button class="btn-icon btn-down" onclick="moveExercise(${i},1)">▼</button>` : ''}
+                  <button class="btn-icon btn-dup" onclick="duplicateExercise(${i})">⧉</button>
+                  <button class="btn-icon btn-del" onclick="removeExercise(${i})">✕</button>
+                </div>
+              </div>
+            </div>
+            <div class="sets-row ${isEditingSets ? 'sets-editing' : ''}">
+              ${ex.sets.map((rep, si) => {
+                let cls = '';
+                if (workoutActive && setsCompleted[i]) {
+                  if (setsCompleted[i][si]) cls = 'done';
+                  else if (i === currentExerciseIdx && si === currentSetIdx) cls = 'current';
+                }
+                return `<div class="set-chip ${cls}" onclick="clickSet(${i},${si})">
+                  <input value="${rep}" onchange="updateSet(${i},${si},this.value)" onfocus="this.select()" type="number" inputmode="numeric">
+                  <span class="set-remove" onclick="event.stopPropagation();removeSet(${i},${si})">✕</span>
+                </div>`;
+              }).join('')}
+              <div class="set-actions">
+                <button class="set-btn" onclick="addSet(${i})">+</button>
+                ${ex.sets.length > 0 ? `<button class="set-btn set-edit-toggle ${isEditingSets?'active':''}"
+                  onclick="toggleSetsEdit(${i})">${isEditingSets?'✓':'−'}</button>` : ''}
+              </div>
+            </div>
+            <div class="exercise-note">
+              <input value="${escHtml(ex.note||'')}" onchange="updateField(${i},'note',this.value)" placeholder="Nota...">
+            </div>
           </div>
-        </div>
-
-        <div class="exercise-meta">
-          <div class="meta-tag">
-            <span class="label">Peso</span>
-            <input value="${escHtml(ex.weight)}" onchange="updateField(${i},'weight',this.value)"
-                   placeholder="—" onfocus="this.select()">
-          </div>
-          <div class="meta-tag">
-            <span class="label">Series</span>
-            <span style="color:var(--accent2);font-weight:600">${ex.sets.length}</span>
-          </div>
-        </div>
-
-        <div class="sets-row ${isEditingSets ? 'sets-editing' : ''}">
-          ${ex.sets.map((rep, si) => {
-            let cls = '';
-            if (workoutActive && setsCompleted[i]) {
-              if (setsCompleted[i][si]) cls = 'done';
-              else if (i === currentExerciseIdx && si === currentSetIdx) cls = 'current';
-            }
-            return `<div class="set-chip ${cls}" onclick="clickSet(${i},${si})">
-              <input value="${rep}" onchange="updateSet(${i},${si},this.value)"
-                     onfocus="this.select()" type="number" inputmode="numeric">
-              <span class="set-remove" onclick="event.stopPropagation();removeSet(${i},${si})">✕</span>
-            </div>`;
-          }).join('')}
-          <div class="set-actions">
-            <button class="set-btn" onclick="addSet(${i})" title="Agregar serie">+</button>
-            ${ex.sets.length > 0 ? `<button class="set-btn set-edit-toggle ${isEditingSets ? 'active' : ''}"
-              onclick="toggleSetsEdit(${i})">${isEditingSets ? '✓' : '−'}</button>` : ''}
-          </div>
-        </div>
-
-        <div class="exercise-note">
-          <input value="${escHtml(ex.note || '')}" onchange="updateField(${i},'note',this.value)"
-                 placeholder="Agregar nota...">
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ==================== DONE TOGGLE ====================
+function toggleDone(idx) {
+  data.days[currentDay].exercises[idx].done = !data.days[currentDay].exercises[idx].done;
+  saveData();
+  renderExercises();
 }
 
 // ==================== DAY MANAGEMENT ====================
 function switchDay(idx) {
-  if (workoutActive) {
-    if (!confirm('¿Detener la rutina actual?')) return;
-    stopWorkout();
-  }
-  currentDay = idx;
-  editingSetsIdx = -1;
-  renderAll();
+  if (workoutActive) { if (!confirm('¿Detener la rutina actual?')) return; stopWorkout(); }
+  currentDay = idx; editingSetsIdx = -1; renderAll();
 }
-
 function addDay() {
-  const name = `DÍA ${data.days.length + 1}`;
-  data.days.push({ name, subtitle: '', restTime: 90, exercises: [] });
-  saveData();
-  currentDay = data.days.length - 1;
-  renderAll();
-  toast('Día agregado');
+  data.days.push({ name: `DÍA ${data.days.length+1}`, subtitle: '', restTime: 90, exercises: [] });
+  saveData(); currentDay = data.days.length - 1; renderAll(); toast('Día agregado');
 }
-
 function removeDay(idx) {
-  if (data.days.length <= 1) { toast('Debe haber al menos un día'); return; }
-  if (!confirm(`¿Eliminar "${data.days[idx].name}" y todos sus ejercicios?`)) return;
+  if (data.days.length <= 1) { toast('Mínimo un día'); return; }
+  if (!confirm(`¿Eliminar "${data.days[idx].name}"?`)) return;
   data.days.splice(idx, 1);
   if (currentDay >= data.days.length) currentDay = data.days.length - 1;
-  saveData();
-  renderAll();
-  toast('Día eliminado');
+  saveData(); renderAll(); toast('Día eliminado');
 }
-
 function duplicateDay() {
   const copy = JSON.parse(JSON.stringify(data.days[currentDay]));
-  copy.name = copy.name + ' (copia)';
+  copy.name += ' (copia)';
   data.days.splice(currentDay + 1, 0, copy);
-  saveData();
-  currentDay = currentDay + 1;
-  renderAll();
-  toast('Día duplicado');
+  saveData(); currentDay++; renderAll(); toast('Día duplicado');
 }
-
 function renameDayPrompt() {
-  const name = prompt('Nombre del día:', data.days[currentDay].name);
-  if (name && name.trim()) {
-    data.days[currentDay].name = name.trim();
-    saveData();
-    renderAll();
-  }
+  const name = prompt('Nombre:', data.days[currentDay].name);
+  if (name?.trim()) { data.days[currentDay].name = name.trim(); saveData(); renderAll(); }
 }
 
 // ==================== EXERCISE MANAGEMENT ====================
-function updateField(exIdx, field, value) {
-  data.days[currentDay].exercises[exIdx][field] = value;
+function updateField(i, field, value) { data.days[currentDay].exercises[i][field] = value; saveData(); }
+function updateSet(i, si, value) { data.days[currentDay].exercises[i].sets[si] = parseInt(value)||0; saveData(); }
+function addSet(i) {
+  const sets = data.days[currentDay].exercises[i].sets;
+  sets.push(sets.length > 0 ? sets[sets.length-1] : 8);
   saveData();
-}
-
-function updateSet(exIdx, setIdx, value) {
-  data.days[currentDay].exercises[exIdx].sets[setIdx] = parseInt(value) || 0;
-  saveData();
-}
-
-function addSet(exIdx) {
-  const sets = data.days[currentDay].exercises[exIdx].sets;
-  const lastRep = sets.length > 0 ? sets[sets.length - 1] : 8;
-  sets.push(lastRep);
-  saveData();
-  if (workoutActive && setsCompleted[exIdx]) setsCompleted[exIdx].push(false);
+  if (workoutActive && setsCompleted[i]) setsCompleted[i].push(false);
   renderExercises();
 }
-
-function removeSet(exIdx, setIdx) {
-  data.days[currentDay].exercises[exIdx].sets.splice(setIdx, 1);
+function removeSet(i, si) {
+  data.days[currentDay].exercises[i].sets.splice(si, 1);
   saveData();
-  if (workoutActive && setsCompleted[exIdx]) setsCompleted[exIdx].splice(setIdx, 1);
-  if (data.days[currentDay].exercises[exIdx].sets.length === 0) editingSetsIdx = -1;
+  if (workoutActive && setsCompleted[i]) setsCompleted[i].splice(si, 1);
+  if (!data.days[currentDay].exercises[i].sets.length) editingSetsIdx = -1;
   renderExercises();
 }
+function toggleSetsEdit(i) { editingSetsIdx = editingSetsIdx === i ? -1 : i; renderExercises(); }
 
-function toggleSetsEdit(exIdx) {
-  editingSetsIdx = editingSetsIdx === exIdx ? -1 : exIdx;
-  renderExercises();
+function toggleActions(e, idx) {
+  e.stopPropagation();
+  const menu = document.getElementById('actions-' + idx);
+  const isOpen = menu.classList.contains('open');
+  // Close all open menus first
+  document.querySelectorAll('.action-btns.open').forEach(m => m.classList.remove('open'));
+  if (!isOpen) menu.classList.add('open');
 }
+// Close action menus when clicking elsewhere
+document.addEventListener('click', () => {
+  document.querySelectorAll('.action-btns.open').forEach(m => m.classList.remove('open'));
+});
 
 function addExercise() {
-  data.days[currentDay].exercises.push({
-    name: 'Nuevo ejercicio', weight: '', sets: [8, 8, 8], note: ''
-  });
+  data.days[currentDay].exercises.push({ name: 'Nuevo ejercicio', weight: '', sets: [8,8,8], note: '', done: false });
   saveData();
   if (workoutActive) setsCompleted.push(new Array(3).fill(false));
   renderExercises();
-  setTimeout(() => {
-    const inputs = document.querySelectorAll('.exercise-name input');
-    if (inputs.length) inputs[inputs.length - 1].focus();
-  }, 100);
-  toast('Ejercicio agregado');
+  setTimeout(() => { const inputs = document.querySelectorAll('.exercise-name input'); if (inputs.length) inputs[inputs.length-1].focus(); }, 100);
 }
-
 function removeExercise(idx) {
-  const name = data.days[currentDay].exercises[idx].name;
-  if (!confirm(`¿Eliminar "${name}"?`)) return;
-  data.days[currentDay].exercises.splice(idx, 1);
-  saveData();
-  if (workoutActive) {
-    setsCompleted.splice(idx, 1);
-    if (currentExerciseIdx >= data.days[currentDay].exercises.length) {
-      currentExerciseIdx = Math.max(0, data.days[currentDay].exercises.length - 1);
-    }
-  }
-  editingSetsIdx = -1;
-  renderExercises();
-  toast('Ejercicio eliminado');
+  if (!confirm(`¿Eliminar "${data.days[currentDay].exercises[idx].name}"?`)) return;
+  data.days[currentDay].exercises.splice(idx, 1); saveData();
+  if (workoutActive) { setsCompleted.splice(idx, 1); if (currentExerciseIdx >= data.days[currentDay].exercises.length) currentExerciseIdx = Math.max(0, data.days[currentDay].exercises.length-1); }
+  editingSetsIdx = -1; renderExercises();
 }
-
 function duplicateExercise(idx) {
   const copy = JSON.parse(JSON.stringify(data.days[currentDay].exercises[idx]));
-  copy.name += ' (copia)';
-  data.days[currentDay].exercises.splice(idx + 1, 0, copy);
-  saveData();
-  if (workoutActive) {
-    setsCompleted.splice(idx + 1, 0, new Array(copy.sets.length).fill(false));
-  }
+  copy.name += ' (copia)'; copy.done = false;
+  data.days[currentDay].exercises.splice(idx+1, 0, copy); saveData();
+  if (workoutActive) setsCompleted.splice(idx+1, 0, new Array(copy.sets.length).fill(false));
   renderExercises();
-  toast('Ejercicio duplicado');
 }
-
 function moveExercise(idx, dir) {
-  const newIdx = idx + dir;
-  const exercises = data.days[currentDay].exercises;
-  if (newIdx < 0 || newIdx >= exercises.length) return;
-  [exercises[idx], exercises[newIdx]] = [exercises[newIdx], exercises[idx]];
+  const ni = idx + dir, exs = data.days[currentDay].exercises;
+  if (ni < 0 || ni >= exs.length) return;
+  [exs[idx], exs[ni]] = [exs[ni], exs[idx]];
   if (workoutActive) {
-    [setsCompleted[idx], setsCompleted[newIdx]] = [setsCompleted[newIdx], setsCompleted[idx]];
-    if (currentExerciseIdx === idx) currentExerciseIdx = newIdx;
-    else if (currentExerciseIdx === newIdx) currentExerciseIdx = idx;
+    [setsCompleted[idx], setsCompleted[ni]] = [setsCompleted[ni], setsCompleted[idx]];
+    if (currentExerciseIdx === idx) currentExerciseIdx = ni;
+    else if (currentExerciseIdx === ni) currentExerciseIdx = idx;
   }
-  saveData();
-  editingSetsIdx = -1;
-  renderExercises();
+  saveData(); editingSetsIdx = -1; renderExercises();
 }
 
 // ==================== DRAG & DROP ====================
-function onDragStart(e, idx) {
-  dragSrcIdx = idx;
-  e.target.closest('.exercise-card').classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
-}
-function onDragOver(e, idx) {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = 'move';
-  if (idx !== dragSrcIdx) {
-    document.querySelectorAll('.exercise-card').forEach(c => c.classList.remove('drag-over'));
-    e.target.closest('.exercise-card')?.classList.add('drag-over');
-  }
-}
-function onDragLeave(e) {
-  e.target.closest('.exercise-card')?.classList.remove('drag-over');
-}
+function onDragStart(e, idx) { dragSrcIdx = idx; e.target.closest('.exercise-card').classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; }
+function onDragOver(e, idx) { e.preventDefault(); if (idx !== dragSrcIdx) { document.querySelectorAll('.exercise-card').forEach(c => c.classList.remove('drag-over')); e.target.closest('.exercise-card')?.classList.add('drag-over'); } }
+function onDragLeave(e) { e.target.closest('.exercise-card')?.classList.remove('drag-over'); }
 function onDrop(e, idx) {
-  e.preventDefault();
-  document.querySelectorAll('.exercise-card').forEach(c => c.classList.remove('drag-over','dragging'));
+  e.preventDefault(); document.querySelectorAll('.exercise-card').forEach(c => c.classList.remove('drag-over','dragging'));
   if (dragSrcIdx === null || dragSrcIdx === idx) return;
-  const exercises = data.days[currentDay].exercises;
-  const [moved] = exercises.splice(dragSrcIdx, 1);
-  exercises.splice(idx, 0, moved);
-  if (workoutActive) {
-    const [movedS] = setsCompleted.splice(dragSrcIdx, 1);
-    setsCompleted.splice(idx, 0, movedS);
-  }
-  saveData();
-  dragSrcIdx = null;
-  renderExercises();
+  const exs = data.days[currentDay].exercises, [moved] = exs.splice(dragSrcIdx, 1); exs.splice(idx, 0, moved);
+  if (workoutActive) { const [ms] = setsCompleted.splice(dragSrcIdx, 1); setsCompleted.splice(idx, 0, ms); }
+  saveData(); dragSrcIdx = null; renderExercises();
 }
-function onDragEnd(e) {
-  document.querySelectorAll('.exercise-card').forEach(c => c.classList.remove('drag-over','dragging'));
-  dragSrcIdx = null;
-}
-
-// Touch drag (basic reorder via long press on mobile — we use arrows instead)
-function onTouchDragStart(e, idx) { /* arrows handle mobile reorder */ }
+function onDragEnd() { document.querySelectorAll('.exercise-card').forEach(c => c.classList.remove('drag-over','dragging')); dragSrcIdx = null; }
 
 // ==================== WORKOUT MODE ====================
-function toggleWorkout() {
-  if (workoutActive) {
-    if (confirm('¿Finalizar la rutina?')) stopWorkout();
-  } else {
-    startWorkout();
-  }
-}
+function toggleWorkout() { workoutActive ? (confirm('¿Finalizar?') && stopWorkout()) : startWorkout(); }
 
 function startWorkout() {
-  const exercises = data.days[currentDay].exercises;
-  if (exercises.length === 0) { toast('Agregá ejercicios primero'); return; }
-  workoutActive = true;
-  workoutSeconds = 0;
-  setsCompleted = exercises.map(ex => new Array(ex.sets.length).fill(false));
-  currentExerciseIdx = findNextIncompleteExercise(0);
-  currentSetIdx = 0;
-
+  const exs = data.days[currentDay].exercises;
+  if (!exs.length) { toast('Agregá ejercicios primero'); return; }
+  // Reset done states
+  exs.forEach(ex => ex.done = false); saveData();
+  workoutActive = true; workoutSeconds = 0;
+  setsCompleted = exs.map(ex => new Array(ex.sets.length).fill(false));
+  currentExerciseIdx = findNextIncompleteExercise(0); currentSetIdx = 0;
   document.getElementById('btnStart').textContent = 'FINALIZAR RUTINA';
   document.getElementById('btnStart').classList.add('running');
   document.getElementById('timerBar').classList.add('visible');
-
-  workoutTimer = setInterval(() => {
-    workoutSeconds++;
-    updateTimerDisplay();
-  }, 1000);
-
+  workoutTimer = setInterval(() => { workoutSeconds++; updateTimerDisplay(); }, 1000);
   renderExercises();
   if (currentExerciseIdx >= 0) scrollToExercise(currentExerciseIdx);
   toast('Rutina iniciada');
 }
 
 function stopWorkout() {
-  workoutActive = false;
-  clearInterval(workoutTimer);
-  clearInterval(restTimerInterval);
+  workoutActive = false; clearInterval(workoutTimer); clearInterval(restTimerInterval);
   document.getElementById('btnStart').textContent = 'EMPEZAR RUTINA';
   document.getElementById('btnStart').classList.remove('running');
   document.getElementById('timerBar').classList.remove('visible');
   document.getElementById('restOverlay').classList.remove('visible');
-  currentExerciseIdx = -1;
-  currentSetIdx = -1;
-  editingSetsIdx = -1;
-  renderExercises();
-  toast(`Rutina finalizada — ${formatTime(workoutSeconds)}`);
+  currentExerciseIdx = -1; currentSetIdx = -1; editingSetsIdx = -1;
+  renderExercises(); toast(`Rutina: ${formatTime(workoutSeconds)}`);
 }
 
-function formatTime(sec) {
-  const m = Math.floor(sec / 60);
-  const s = sec % 60;
-  return `${m}m ${s.toString().padStart(2,'0')}s`;
-}
-
+function formatTime(s) { return `${Math.floor(s/60)}m ${(s%60).toString().padStart(2,'0')}s`; }
 function updateTimerDisplay() {
-  const m = Math.floor(workoutSeconds / 60).toString().padStart(2, '0');
-  const s = (workoutSeconds % 60).toString().padStart(2, '0');
+  const m = Math.floor(workoutSeconds/60).toString().padStart(2,'0');
+  const s = (workoutSeconds%60).toString().padStart(2,'0');
   document.getElementById('timerDisplay').textContent = `${m}:${s}`;
 }
 
-function clickSet(exIdx, setIdx) {
+function clickSet(ei, si) {
   if (!workoutActive) return;
-  setsCompleted[exIdx][setIdx] = !setsCompleted[exIdx][setIdx];
-
-  if (setsCompleted[exIdx].every(s => s)) {
-    const nextIdx = findNextIncompleteExercise(exIdx + 1);
-    if (nextIdx !== -1) {
-      startRest(nextIdx);
-    } else {
-      // Check if ALL exercises are done
-      const anyLeft = findNextIncompleteExercise(0);
-      if (anyLeft === -1) {
-        currentExerciseIdx = -1;
-        currentSetIdx = -1;
-        document.getElementById('btnStart').textContent = '✓ RUTINA COMPLETA';
-      } else {
-        currentExerciseIdx = anyLeft;
-        currentSetIdx = setsCompleted[anyLeft]?.findIndex(s => !s) ?? 0;
-      }
+  setsCompleted[ei][si] = !setsCompleted[ei][si];
+  if (setsCompleted[ei].every(s => s)) {
+    // Mark exercise as done
+    data.days[currentDay].exercises[ei].done = true; saveData();
+    const next = findNextIncompleteExercise(ei + 1);
+    if (next !== -1) { startRest(next); }
+    else {
+      const any = findNextIncompleteExercise(0);
+      if (any === -1) { currentExerciseIdx = -1; currentSetIdx = -1; document.getElementById('btnStart').textContent = '✓ COMPLETA'; }
+      else { currentExerciseIdx = any; currentSetIdx = setsCompleted[any]?.findIndex(s => !s) ?? 0; }
     }
   } else {
-    currentExerciseIdx = exIdx;
-    currentSetIdx = setsCompleted[exIdx].findIndex(s => !s);
+    data.days[currentDay].exercises[ei].done = false; saveData();
+    currentExerciseIdx = ei; currentSetIdx = setsCompleted[ei].findIndex(s => !s);
   }
   renderExercises();
 }
 
-function findNextIncompleteExercise(startFrom) {
-  const exercises = data.days[currentDay].exercises;
-  for (let i = startFrom; i < exercises.length; i++) {
-    if (exercises[i].sets.length === 0) continue;
-    if (!setsCompleted[i] || !setsCompleted[i].every(s => s)) return i;
-  }
+function findNextIncompleteExercise(from) {
+  const exs = data.days[currentDay].exercises;
+  for (let i = from; i < exs.length; i++) { if (!exs[i].sets.length) continue; if (!setsCompleted[i] || !setsCompleted[i].every(s => s)) return i; }
   return -1;
 }
 
-function startRest(nextExIdx) {
-  const restTime = data.days[currentDay].restTime || 90;
-  restSeconds = restTime;
+function startRest(nextIdx) {
+  const rt = data.days[currentDay].restTime || 90;
+  restSeconds = rt;
   const overlay = document.getElementById('restOverlay');
-  const nextName = data.days[currentDay].exercises[nextExIdx]?.name || '-';
-  document.getElementById('restNextExercise').innerHTML = `Siguiente: <strong>${nextName}</strong>`;
+  document.getElementById('restNextExercise').innerHTML = `Siguiente: <strong>${data.days[currentDay].exercises[nextIdx]?.name||'-'}</strong>`;
   document.getElementById('restTimeDisplay').textContent = restSeconds;
   overlay.classList.add('visible');
-
-  const circumference = 2 * Math.PI * 90;
+  const circ = 2 * Math.PI * 80;
   const ring = document.getElementById('restRingFg');
   ring.style.strokeDashoffset = '0';
-
   clearInterval(restTimerInterval);
   restTimerInterval = setInterval(() => {
     restSeconds--;
     document.getElementById('restTimeDisplay').textContent = restSeconds;
-    const progress = restSeconds / restTime;
-    ring.style.strokeDashoffset = circumference * (1 - progress);
-
+    ring.style.strokeDashoffset = circ * (1 - restSeconds / rt);
     if (restSeconds <= 0) {
-      clearInterval(restTimerInterval);
-      document.getElementById('restOverlay').classList.remove('visible');
-      currentExerciseIdx = nextExIdx;
-      currentSetIdx = setsCompleted[nextExIdx]?.findIndex(s => !s) ?? 0;
-      renderExercises();
-      scrollToExercise(nextExIdx);
+      clearInterval(restTimerInterval); overlay.classList.remove('visible');
+      currentExerciseIdx = nextIdx; currentSetIdx = setsCompleted[nextIdx]?.findIndex(s => !s) ?? 0;
+      renderExercises(); scrollToExercise(nextIdx);
     }
   }, 1000);
 }
 
 function skipRest() {
-  clearInterval(restTimerInterval);
-  document.getElementById('restOverlay').classList.remove('visible');
-  const nextIdx = findNextIncompleteExercise(currentExerciseIdx + 1);
-  if (nextIdx !== -1) {
-    currentExerciseIdx = nextIdx;
-    currentSetIdx = setsCompleted[nextIdx]?.findIndex(s => !s) ?? 0;
-  } else {
-    const anyLeft = findNextIncompleteExercise(0);
-    if (anyLeft !== -1) {
-      currentExerciseIdx = anyLeft;
-      currentSetIdx = setsCompleted[anyLeft]?.findIndex(s => !s) ?? 0;
-    }
-  }
-  renderExercises();
-  if (currentExerciseIdx >= 0) scrollToExercise(currentExerciseIdx);
+  clearInterval(restTimerInterval); document.getElementById('restOverlay').classList.remove('visible');
+  const next = findNextIncompleteExercise(currentExerciseIdx + 1);
+  if (next !== -1) { currentExerciseIdx = next; currentSetIdx = setsCompleted[next]?.findIndex(s => !s) ?? 0; }
+  else { const any = findNextIncompleteExercise(0); if (any !== -1) { currentExerciseIdx = any; currentSetIdx = setsCompleted[any]?.findIndex(s => !s) ?? 0; } }
+  renderExercises(); if (currentExerciseIdx >= 0) scrollToExercise(currentExerciseIdx);
 }
 
 function scrollToExercise(idx) {
-  setTimeout(() => {
-    const cards = document.querySelectorAll('.exercise-card');
-    if (cards[idx]) cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 100);
+  setTimeout(() => { const cards = document.querySelectorAll('.exercise-card'); cards[idx]?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
 }
 
-// ==================== SETTINGS / IMPORT / EXPORT ====================
-function openSettings() {
-  document.getElementById('settingsModal').classList.add('open');
-}
-
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-}
-
+// ==================== SETTINGS ====================
+function openSettings() { document.getElementById('settingsModal').classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function exportData() {
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'boom_gym_backup.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  toast('Rutinas exportadas');
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'boom_gym_backup.json'; a.click(); URL.revokeObjectURL(a.href); toast('Exportado');
 }
-
-function importData() {
-  document.getElementById('fileInput').click();
-}
-
+function importData() { document.getElementById('fileInput').click(); }
 function handleImport(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
+  const f = event.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = (e) => {
     try {
-      const imported = JSON.parse(e.target.result);
-      if (imported.days && Array.isArray(imported.days)) {
-        data = imported;
-        data.days.forEach(day => { if (!day.restTime) day.restTime = 90; });
-        saveData();
-        currentDay = 0;
-        renderAll();
-        toast('Rutinas importadas');
-      } else {
-        toast('Formato inválido');
-      }
-    } catch { toast('Error al leer archivo'); }
+      const d = JSON.parse(e.target.result);
+      if (d.days && Array.isArray(d.days)) {
+        data = d; data.days.forEach(day => { if (!day.restTime) day.restTime = 90; day.exercises.forEach(ex => { if (ex.done === undefined) ex.done = false; }); });
+        saveData(); currentDay = 0; renderAll(); toast('Importado');
+      } else toast('Formato inválido');
+    } catch { toast('Error al leer'); }
   };
-  reader.readAsText(file);
-  event.target.value = '';
+  r.readAsText(f); event.target.value = '';
 }
-
 function resetAllData() {
-  if (!confirm('¿Resetear TODAS las rutinas a los valores iniciales? Se perderán todos los cambios.')) return;
+  if (!confirm('¿Resetear TODAS las rutinas?')) return;
   data = JSON.parse(JSON.stringify(DEFAULT_DATA));
-  saveData();
-  currentDay = 0;
-  renderAll();
-  toast('Datos reseteados');
+  saveData(); currentDay = 0; renderAll(); toast('Reseteado');
 }
 
 // ==================== INIT ====================
