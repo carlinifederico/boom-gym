@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh api:*)",
+      "Bash(node:*)",
+      "mcp__patapim-browser__browser_status",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)"
+    ]
+  }
+}

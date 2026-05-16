@@ -32,6 +32,15 @@
   --red:            #ff4d4d;  /* danger */
   --orange:         #ff8a1f;  /* warn */
 
+  /* Muscle group colors */
+  --muscle-piernas: #ff6b6b;
+  --muscle-espalda: #4ecdc4;
+  --muscle-pecho:   #45b7d1;
+  --muscle-hombros: #f9ca24;
+  --muscle-core:    #ff8a1f;
+  --muscle-brazos:  #a66bff;
+  --muscle-full:    #00ff9d;
+
   --accent: var(--accent-card);
   --accent2: var(--accent-card);
   --accent-glow: rgba(198, 255, 61, 0.28);
@@ -168,6 +177,80 @@ input, button { font-family: inherit; }
   font-weight: 600; text-align: center; outline: none;
 }
 
+/* Muscle group tag */
+.muscle-tag {
+  display: inline-flex; align-items: center;
+  padding: 1px 5px; border-radius: 3px;
+  font-size: 7px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  line-height: 1.4;
+}
+.muscle-tag.mt-piernas  { background: rgba(255,107,107,0.15); color: var(--muscle-piernas); }
+.muscle-tag.mt-espalda  { background: rgba(78,205,196,0.15); color: var(--muscle-espalda); }
+.muscle-tag.mt-pecho    { background: rgba(69,183,209,0.15); color: var(--muscle-pecho); }
+.muscle-tag.mt-hombros  { background: rgba(249,202,36,0.15); color: var(--muscle-hombros); }
+.muscle-tag.mt-core     { background: rgba(255,138,31,0.15); color: var(--muscle-core); }
+.muscle-tag.mt-brazos   { background: rgba(166,107,255,0.15); color: var(--muscle-brazos); }
+.muscle-tag.mt-full     { background: rgba(0,255,157,0.12); color: var(--muscle-full); }
+
+/* Section / Block containers */
+.section-block {
+  margin: 6px 12px; border-radius: var(--radius);
+  border: 1px solid var(--border); overflow: hidden;
+  background: var(--bg-elev);
+}
+.section-header {
+  padding: 9px 12px; display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.section-header::before {
+  content: ''; position: absolute; inset: 0;
+  opacity: 0.06; pointer-events: none;
+}
+.section-block.block-type .section-header::before { background: linear-gradient(135deg, var(--accent-routine), transparent); }
+.section-block.core-type .section-header::before { background: linear-gradient(135deg, var(--accent-rest), transparent); }
+.section-header .section-name {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text);
+}
+.section-block.core-type .section-header .section-name { color: var(--accent-rest); }
+.section-block.block-type .section-header .section-name { color: var(--accent-routine); }
+.section-badge {
+  font-size: 8px; font-weight: 600; padding: 2px 7px; border-radius: 3px;
+  letter-spacing: 0.8px; text-transform: uppercase;
+}
+.section-block.block-type .section-badge {
+  background: rgba(166,107,255,0.12); color: var(--accent-routine); border: 1px solid rgba(166,107,255,0.2);
+}
+.section-block.core-type .section-badge {
+  background: rgba(255,138,31,0.12); color: var(--accent-rest); border: 1px solid rgba(255,138,31,0.2);
+}
+.section-rest-info {
+  font-size: 8px; color: var(--text3); letter-spacing: 0.5px; margin-left: auto;
+}
+.section-exercises { padding: 4px 4px; }
+.section-exercises .exercise-card { margin-bottom: 3px; }
+.section-exercises .exercise-card:last-child { margin-bottom: 0; }
+
+/* Exercise info panel */
+.exercise-info {
+  display: none; margin-top: 4px; padding: 5px 8px;
+  background: var(--surface2); border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.exercise-info.open { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.exercise-info input {
+  flex: 1; min-width: 120px; background: none; border: none;
+  color: var(--text2); font: inherit; font-size: 10px; outline: none; padding: 2px 0;
+}
+.exercise-info input:focus { border-bottom: 1px solid var(--accent); }
+.exercise-info .info-link {
+  font-size: 9px; color: var(--accent-tabs); text-decoration: none;
+  padding: 3px 8px; border: 1px solid rgba(0,229,255,0.3); border-radius: 3px;
+  letter-spacing: 0.5px; white-space: nowrap;
+}
+.exercise-info .info-link:active { background: rgba(0,229,255,0.1); }
+
 /* Exercise List */
 .exercise-list { padding: 2px 12px; }
 
@@ -183,6 +266,10 @@ input, button { font-family: inherit; }
 .exercise-card::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
   background: var(--accent-card); opacity: 0.9;
+}
+.exercise-card-bar {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  opacity: 0.9; z-index: 1;
 }
 .exercise-card.ex-done {
   opacity: 0.45;
@@ -213,10 +300,10 @@ input, button { font-family: inherit; }
   display: flex; gap: 6px; align-items: center;
 }
 .exercise-icon {
-  flex-shrink: 0; width: 28px; height: 28px; display: flex;
+  flex-shrink: 0; width: 36px; height: 36px; display: flex;
   align-items: center; justify-content: center;
 }
-.exercise-icon svg { width: 28px; height: 28px; }
+.exercise-icon svg { width: 36px; height: 36px; }
 .exercise-body { flex: 1; min-width: 0; }
 
 /* Check button */
@@ -237,9 +324,16 @@ input, button { font-family: inherit; }
 .exercise-top {
   display: flex; align-items: center; gap: 4px; flex-wrap: nowrap;
 }
+.exercise-top-row {
+  display: flex; align-items: center; gap: 4px; width: 100%;
+}
+.exercise-meta-row {
+  display: flex; align-items: center; gap: 4px; margin-top: 2px;
+}
 .exercise-name {
-  font-size: 12px; font-weight: 600; color: var(--text);
+  font-size: 11px; font-weight: 600; color: var(--text);
   flex: 1; min-width: 0; letter-spacing: 0.2px;
+  display: flex; flex-direction: column; gap: 1px;
 }
 .exercise-name input {
   background: none; border: none; color: var(--text);
@@ -297,20 +391,34 @@ input, button { font-family: inherit; }
   display: flex; gap: 3px; margin-top: 4px; flex-wrap: wrap; align-items: center;
 }
 .set-chip {
-  width: 34px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 4px;
+  width: 46px; min-height: 32px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: 4px; padding: 2px 1px;
   background: var(--surface2);
   border: 1px solid var(--border);
   font-size: 12px; font-weight: 600; color: var(--text2);
   cursor: pointer; transition: all 0.2s; position: relative;
   font-variant-numeric: tabular-nums;
 }
-.set-chip input {
+.set-chip .chip-weight {
+  background: none; border: none; color: var(--text3);
+  font: inherit; font-size: 9px; font-weight: 500;
+  width: 100%; text-align: center; outline: none; padding: 0;
+  line-height: 1.2;
+}
+.set-chip .chip-weight:focus { color: var(--accent-card); }
+.set-chip .chip-reps {
   background: none; border: none; color: inherit;
   font: inherit; font-weight: 600;
-  width: 100%; height: 100%; text-align: center; outline: none;
+  width: 100%; text-align: center; outline: none; padding: 0;
+  line-height: 1.3;
 }
+.set-chip .chip-unit {
+  display: none;
+}
+.set-chip.no-weights { width: 38px; }
+.set-chip.no-weights .chip-weight { display: none; }
+.set-chip.no-weights .chip-unit { display: none; }
 .set-chip.done {
   background: rgba(0,255,157,0.12);
   border-color: var(--green); color: var(--green);
@@ -478,6 +586,90 @@ input, button { font-family: inherit; }
   z-index: 300; opacity: 0; transition: opacity 0.3s; pointer-events: none;
 }
 .toast.show { opacity: 1; }
+
+/* Confetti celebration */
+.confetti-container {
+  position: fixed; inset: 0; z-index: 400; pointer-events: none; overflow: hidden;
+}
+.confetti-piece {
+  position: absolute; width: 8px; height: 14px; border-radius: 2px;
+  top: -20px; opacity: 0;
+  animation: confetti-fall 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+@keyframes confetti-fall {
+  0% { opacity: 1; transform: translateY(0) rotateZ(0deg) rotateX(0deg); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(105vh) rotateZ(720deg) rotateX(360deg); }
+}
+
+/* Completion overlay */
+.completion-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.97);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+@keyframes completion-in { to { opacity: 1; } }
+.completion-overlay .comp-icon {
+  font-size: 64px; margin-bottom: 16px;
+  animation: comp-bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+@keyframes comp-bounce { from { transform: scale(0) rotate(-20deg); opacity: 0; } to { transform: scale(1) rotate(0deg); opacity: 1; } }
+.completion-overlay .comp-title {
+  font-size: 18px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--green); margin-bottom: 8px;
+  animation: comp-slide 0.5s ease 0.35s both;
+}
+.completion-overlay .comp-time {
+  font-size: 36px; font-weight: 700; color: var(--text);
+  font-variant-numeric: tabular-nums; margin-bottom: 6px;
+  animation: comp-slide 0.5s ease 0.45s both;
+}
+.completion-overlay .comp-sub {
+  font-size: 11px; color: var(--text2); letter-spacing: 2px; text-transform: uppercase;
+  animation: comp-slide 0.5s ease 0.55s both;
+}
+@keyframes comp-slide { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.completion-overlay .comp-dismiss {
+  margin-top: 36px; padding: 14px 40px; background: var(--green); border: none;
+  border-radius: var(--radius-sm); color: #000; font-family: inherit;
+  font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  cursor: pointer; box-shadow: 0 0 30px rgba(0,255,157,0.4);
+  animation: comp-slide 0.5s ease 0.7s both;
+  transition: transform 0.15s;
+}
+.completion-overlay .comp-dismiss:active { transform: scale(0.95); }
+
+/* Set chip completion glow */
+.set-chip.just-done {
+  animation: chip-glow 0.5s ease;
+}
+@keyframes chip-glow {
+  0% { box-shadow: 0 0 0 0 rgba(0,255,157,0.6); transform: scale(1); }
+  30% { box-shadow: 0 0 16px 4px rgba(0,255,157,0.5); transform: scale(1.12); }
+  100% { box-shadow: none; transform: scale(1); }
+}
+
+/* Exercise card done animation */
+.exercise-card.just-completed {
+  animation: card-done-flash 0.6s ease;
+}
+@keyframes card-done-flash {
+  0% { border-color: var(--border); }
+  40% { border-color: var(--green); box-shadow: 0 0 20px rgba(0,255,157,0.2); }
+  100% { border-color: var(--border); }
+}
+
+/* Smooth exercise list transitions */
+.exercise-list { transition: opacity 0.15s ease; }
+
+/* Btn-start pulse when running */
+.btn-start.running {
+  animation: btn-pulse 2.5s ease-in-out infinite;
+}
+@keyframes btn-pulse {
+  0%, 100% { box-shadow: 0 0 30px rgba(0,255,157,0.45), 0 4px 12px rgba(0,0,0,0.4); }
+  50% { box-shadow: 0 0 50px rgba(0,255,157,0.65), 0 4px 20px rgba(0,0,0,0.5); }
+}
 
 .empty-state {
   text-align: center; padding: 30px 20px; color: var(--text3);
@@ -1065,6 +1257,242 @@ const EXERCISE_ICONS = {
     <path d="M14 15 L20 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
     <line x1="8" y1="23" x2="5" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
   </svg>`,
+  // Chin ups (underhand pull-up)
+  'chin ups': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="3" y1="3" x2="25" y2="3" stroke="#6c5ce7" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="14" cy="9" r="2.5" fill="#a0a0b0"/>
+    <path d="M10 9 L9 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 9 L19 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="12" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M11 23 L14 20 L17 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <rect x="8" y="11" rx="1" width="3" height="2" fill="#e17055" opacity="0.5"/>
+    <rect x="17" y="11" rx="1" width="3" height="2" fill="#e17055" opacity="0.5"/>
+  </svg>`,
+  // Box jump
+  'salto al cajon': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="6" y="16" width="16" height="10" rx="1.5" fill="#3a3a4a"/>
+    <rect x="8" y="18" width="12" height="6" rx="1" fill="#6c5ce7" opacity="0.3"/>
+    <circle cx="14" cy="6" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="9" x2="14" y2="14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 9 L8 12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 9 L20 12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M12 15 L14 14 L16 15" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  </svg>`,
+  // Paloma (barbell row variant)
+  'paloma': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="10" cy="6" r="2.5" fill="#a0a0b0"/>
+    <path d="M10 9 L12 15 L8 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M12 15 L17 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="4" y1="17" x2="22" y2="17" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="3" cy="17" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="23" cy="17" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+    <path d="M12 15 L9 12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Press hombros vertical (overhead press with bar)
+  'press hombros': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="10" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="13" x2="14" y2="21" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 22 L14 21 L18 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <line x1="5" y1="4" x2="23" y2="4" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="4" cy="4" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+    <circle cx="24" cy="4" r="1.5" fill="#6c5ce7" opacity="0.7"/>
+    <path d="M10 13 L8 5" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 13 L20 5" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Step-up with barbell
+  'subida al banco': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="16" width="14" height="10" rx="1.5" fill="#3a3a4a"/>
+    <circle cx="12" cy="5" r="2.5" fill="#a0a0b0"/>
+    <line x1="5" y1="8" x2="19" y2="8" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="4" cy="8" r="1.5" fill="#6c5ce7" opacity="0.6"/>
+    <circle cx="20" cy="8" r="1.5" fill="#6c5ce7" opacity="0.6"/>
+    <path d="M12 8 L12 14 L16 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M12 14 L8 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Single-arm dumbbell press on bench
+  'press banco unilateral': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="16" width="20" height="3" rx="1.5" fill="#3a3a4a"/>
+    <circle cx="14" cy="14" r="2.5" fill="#a0a0b0"/>
+    <rect x="8" y="15" width="12" height="2" rx="1" fill="#a0a0b0" opacity="0.4"/>
+    <path d="M18 14 L22 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="20" y="4" width="4" height="3" rx="1" fill="#6c5ce7"/>
+    <path d="M10 14 L8 18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Kettlebell swing
+  'swing': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="6" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="9" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 16 L14 16 L18 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 16 L10 23 M14 16 L18 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="14" cy="3" r="0" fill="none"/>
+    <path d="M10 9 L6 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 9 L22 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <ellipse cx="14" cy="1" rx="3" ry="2" fill="none" stroke="#6c5ce7" stroke-width="1.5"/>
+    <circle cx="14" cy="3.5" r="2" fill="#6c5ce7" opacity="0.7"/>
+  </svg>`,
+  // Bulgarian split squat (deficit)
+  'bulgaras': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="10" cy="4" r="2.5" fill="#a0a0b0"/>
+    <line x1="10" y1="7" x2="10" y2="14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 14 L7 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 14 L16 18 L20 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <rect x="19" y="14" width="6" height="3" rx="1.5" fill="#3a3a4a"/>
+    <rect x="3" y="22" width="8" height="3" rx="1" fill="#3a3a4a" opacity="0.5"/>
+  </svg>`,
+  // Jumping lunges
+  'estocadas': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="3" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="6" x2="14" y2="13" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 13 L8 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 13 L20 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M8 23 L5 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M11 6 L7 3 M17 6 L21 3" stroke="#e17055" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+  </svg>`,
+  // Pull-up
+  'pull up': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="3" y1="3" x2="25" y2="3" stroke="#6c5ce7" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="14" cy="9" r="2.5" fill="#a0a0b0"/>
+    <path d="M10 9 L7 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 9 L21 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="12" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M11 23 L14 20 L17 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  </svg>`,
+  // TRX Row
+  'remo trx': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="14" y1="2" x2="14" y2="8" stroke="#3a3a4a" stroke-width="2"/>
+    <line x1="10" y1="8" x2="18" y2="8" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="14" cy="14" r="2.5" fill="#a0a0b0"/>
+    <path d="M14 8 L10 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 8 L18 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="17" x2="14" y2="22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 24 L14 22 L18 24" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  </svg>`,
+  // Press vertical unilateral
+  'press vertical': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="10" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="13" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 22 L14 20 L18 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M18 13 L22 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="20" y="2" width="4" height="3" rx="1" fill="#6c5ce7"/>
+    <path d="M10 13 L8 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Dead bug
+  'bicho muerto': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="14" r="2.5" fill="#a0a0b0"/>
+    <line x1="6" y1="14" x2="18" y2="14" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
+    <path d="M18 14 L22 8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M6 14 L3 8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 14 L22 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M6 14 L3 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="9" y="12" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.5"/>
+    <rect x="13" y="12" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.5"/>
+  </svg>`,
+  // Renegade row
+  'renegado': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="22" cy="10" r="2.5" fill="#a0a0b0"/>
+    <line x1="5" y1="14" x2="20" y2="12" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
+    <path d="M5 14 L5 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M20 12 L20 18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M20 12 L24 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="22" y="4" width="4" height="3" rx="1" fill="#6c5ce7"/>
+  </svg>`,
+  // Hanging leg raise
+  'elevacion piernas': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="3" y1="3" x2="25" y2="3" stroke="#3a3a4a" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="14" cy="8" r="2.5" fill="#a0a0b0"/>
+    <path d="M10 8 L10 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 8 L18 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="11" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 16 L8 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 16 L20 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="10" y="13" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.5"/>
+    <rect x="14" y="13" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.5"/>
+  </svg>`,
+  // Side plank abduction
+  'abductor plancha': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="8" r="2.5" fill="#a0a0b0"/>
+    <line x1="6" y1="16" x2="18" y2="10" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
+    <path d="M6 16 L6 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 10 L22 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 10 L16 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // Cable glute med
+  'gluteo medio': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="22" y="5" width="3" height="18" rx="1.5" fill="#3a3a4a"/>
+    <circle cx="12" cy="6" r="2.5" fill="#a0a0b0"/>
+    <line x1="12" y1="9" x2="12" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M12 16 L10 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M12 16 L18 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="14" x2="22" y2="14" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
+    <ellipse cx="13" cy="14" rx="2.5" ry="3" fill="#e17055" opacity="0.3"/>
+  </svg>`,
+  // Pallof press
+  'paloff': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="22" y="5" width="3" height="18" rx="1.5" fill="#3a3a4a"/>
+    <circle cx="10" cy="8" r="2.5" fill="#a0a0b0"/>
+    <line x1="10" y1="11" x2="10" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 11 L6 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 11 L16 11" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="16" y1="11" x2="22" y2="11" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="8" y="13" width="4" height="4" rx="0.5" fill="#e17055" opacity="0.4"/>
+  </svg>`,
+  // Good mornings
+  'buenos dias': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="5" r="2.5" fill="#a0a0b0"/>
+    <line x1="5" y1="8" x2="19" y2="8" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="4" cy="8" r="1.5" fill="#6c5ce7" opacity="0.6"/>
+    <circle cx="20" cy="8" r="1.5" fill="#6c5ce7" opacity="0.6"/>
+    <path d="M12 8 L16 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M16 16 L13 23 M16 16 L19 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  // External rotation
+  'rotador externo': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="8" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="11" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 11 L10 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 11 L18 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 16 L4 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 16 L24 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="2" y="12" width="3" height="3" rx="1" fill="#6c5ce7"/>
+    <rect x="23" y="12" width="3" height="3" rx="1" fill="#6c5ce7"/>
+    <path d="M6 13 Q8 10 10 13" stroke="#e17055" stroke-width="1" fill="none" opacity="0.6"/>
+    <path d="M18 13 Q20 10 22 13" stroke="#e17055" stroke-width="1" fill="none" opacity="0.6"/>
+  </svg>`,
+  // Turkish Get-Up
+  'tgu': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="10" cy="18" r="2.5" fill="#a0a0b0"/>
+    <path d="M10 18 L10 12 L14 8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M10 18 L6 24" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 18 L16 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 8 L18 2" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="16" y="0" width="4" height="3" rx="1" fill="#6c5ce7"/>
+  </svg>`,
+  // Stir the pot
+  'revolver la olla': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="10" r="2.5" fill="#a0a0b0"/>
+    <line x1="5" y1="14" x2="18" y2="12" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
+    <path d="M5 14 L5 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <ellipse cx="18" cy="16" rx="6" ry="4" fill="#6c5ce7" opacity="0.2"/>
+    <path d="M18 12 L15 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M15 16 Q18 20 21 16" stroke="#e17055" stroke-width="1" fill="none" opacity="0.6"/>
+  </svg>`,
+  // Suitcase carry
+  'caminata': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="14" cy="4" r="2.5" fill="#a0a0b0"/>
+    <line x1="14" y1="7" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M10 7 L10 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M18 7 L18 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M14 16 L10 24 M14 16 L18 24" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="3" y="12" width="5" height="4" rx="1" fill="#6c5ce7"/>
+  </svg>`,
+  // Copenhagen plank
+  'plancha copenhague': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="22" cy="10" r="2.5" fill="#a0a0b0"/>
+    <line x1="5" y1="14" x2="20" y2="12" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
+    <path d="M5 14 L5 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="14" y="10" width="2" height="8" rx="0.5" fill="#3a3a4a" transform="rotate(-5 14 10)"/>
+    <path d="M20 12 L18 18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
   // Generic dumbbell (fallback)
   '_default': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="3" y="10" width="5" height="8" rx="1.5" fill="#6c5ce7"/>
@@ -1095,6 +1523,35 @@ EXERCISE_ICONS['jalón'] = EXERCISE_ICONS['jalon'];
 EXERCISE_ICONS['lunges'] = EXERCISE_ICONS['zancadas'];
 EXERCISE_ICONS['apertura inclinada'] = EXERCISE_ICONS['apertura'];
 EXERCISE_ICONS['cuádriceps'] = EXERCISE_ICONS['cuadriceps'];
+EXERCISE_ICONS['paloma barra'] = EXERCISE_ICONS['paloma'];
+EXERCISE_ICONS['hip trust'] = EXERCISE_ICONS['hip thrust'];
+EXERCISE_ICONS['press hombros vertical'] = EXERCISE_ICONS['press hombros'];
+EXERCISE_ICONS['press hombros vertical con barra'] = EXERCISE_ICONS['press hombros'];
+EXERCISE_ICONS['subida al banco con barra'] = EXERCISE_ICONS['subida al banco'];
+EXERCISE_ICONS['press banco unilateral con mancuerna'] = EXERCISE_ICONS['press banco unilateral'];
+EXERCISE_ICONS['press vertical unilateral con mancuerna'] = EXERCISE_ICONS['press vertical'];
+EXERCISE_ICONS['press vertical unilateral'] = EXERCISE_ICONS['press vertical'];
+EXERCISE_ICONS['bulgaras con deficit'] = EXERCISE_ICONS['bulgaras'];
+EXERCISE_ICONS['búlgaras'] = EXERCISE_ICONS['bulgaras'];
+EXERCISE_ICONS['estocadas saltadas'] = EXERCISE_ICONS['estocadas'];
+EXERCISE_ICONS['salto al cajón'] = EXERCISE_ICONS['salto al cajon'];
+EXERCISE_ICONS['remo en banco'] = EXERCISE_ICONS['remo'];
+EXERCISE_ICONS['pallof'] = EXERCISE_ICONS['paloff'];
+EXERCISE_ICONS['pallof cangrejo'] = EXERCISE_ICONS['paloff'];
+EXERCISE_ICONS['turkish get-up'] = EXERCISE_ICONS['tgu'];
+EXERCISE_ICONS['caminata de la valija'] = EXERCISE_ICONS['caminata'];
+EXERCISE_ICONS['revolver la olla'] = EXERCISE_ICONS['revolver la olla'];
+EXERCISE_ICONS['buenos días'] = EXERCISE_ICONS['buenos dias'];
+EXERCISE_ICONS['plancha copenhague en trx'] = EXERCISE_ICONS['plancha copenhague'];
+EXERCISE_ICONS['plancha 1 pie en trx'] = EXERCISE_ICONS['plancha'];
+EXERCISE_ICONS['bicho muerto con pesa y tobillera'] = EXERCISE_ICONS['bicho muerto'];
+EXERCISE_ICONS['abductor de plancha lateral'] = EXERCISE_ICONS['abductor plancha'];
+EXERCISE_ICONS['glúteo medio con polea'] = EXERCISE_ICONS['gluteo medio'];
+EXERCISE_ICONS['rotador externo con polea'] = EXERCISE_ICONS['rotador externo'];
+EXERCISE_ICONS['rotador externo bajo'] = EXERCISE_ICONS['rotador externo'];
+EXERCISE_ICONS['rotador externo en 4 apoyos'] = EXERCISE_ICONS['rotador externo'];
+EXERCISE_ICONS['elevación de piernas colgado'] = EXERCISE_ICONS['elevacion piernas'];
+EXERCISE_ICONS['turkish get-up (tgu)'] = EXERCISE_ICONS['tgu'];
 
 function getExerciseIcon(exerciseName) {
   const name = exerciseName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -1115,6 +1572,79 @@ function getExerciseIcon(exerciseName) {
 }
 
 
+// ==================== MUSCLE GROUP LOOKUP ====================
+const EXERCISE_MUSCLES = {
+  'sentadilla':'piernas','chin ups':'espalda','salto al cajon':'piernas','paloma':'piernas',
+  'fondos':'pecho','press hombros':'hombros','subida al banco':'piernas','press banco':'pecho',
+  'remo':'espalda','peso muerto':'piernas','swing':'full','press plano':'pecho',
+  'bulgara':'piernas','estocada':'piernas','pull up':'espalda','hip thrust':'piernas',
+  'remo trx':'espalda','press vertical':'hombros','plancha':'core','bicho muerto':'core',
+  'renegado':'core','elevacion piernas':'core','abductor plancha':'core','gluteo medio':'piernas',
+  'paloff':'core','pallof':'core','buenos dias':'piernas','rotador externo':'hombros',
+  'tgu':'full','turkish':'full','revolver la olla':'core','caminata':'core',
+  'isquios':'piernas','press militar':'hombros','abductores':'piernas','aductores':'piernas',
+  'dorsales':'espalda','dominadas':'espalda','biceps':'brazos','trapecios':'espalda',
+  'abdominales':'core','prensa':'piernas','cuadriceps':'piernas','apertura':'pecho',
+  'vuelos laterales':'hombros','triceps':'brazos','face pull':'espalda',
+  'gemelos':'piernas','press inclinado':'pecho','jalon':'espalda','remo polea':'espalda',
+  'peso muerto rumano':'piernas','zancadas':'piernas','plancha copenhague':'core'
+};
+
+function getExerciseMuscle(name) {
+  if (!name) return '';
+  const n = name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  for (const [key, muscle] of Object.entries(EXERCISE_MUSCLES)) {
+    const k = key.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    if (n === k || n.includes(k) || k.includes(n)) return muscle;
+  }
+  for (const [key, muscle] of Object.entries(EXERCISE_MUSCLES)) {
+    const k = key.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    const words = k.split(' ');
+    if (words.some(w => w.length > 3 && n.includes(w))) return muscle;
+  }
+  return '';
+}
+
+// ==================== VIDEO LOOKUP ====================
+const EXERCISE_VIDEOS = {
+  'sentadilla':'https://www.youtube.com/results?search_query=sentadilla+con+barra+t%C3%A9cnica',
+  'chin ups':'https://www.youtube.com/results?search_query=chin+ups+t%C3%A9cnica+correcta',
+  'pull up':'https://www.youtube.com/results?search_query=pull+ups+t%C3%A9cnica',
+  'peso muerto':'https://www.youtube.com/results?search_query=peso+muerto+t%C3%A9cnica+correcta',
+  'press plano':'https://www.youtube.com/results?search_query=press+de+banca+plano+t%C3%A9cnica',
+  'fondos':'https://www.youtube.com/results?search_query=fondos+en+paralelas+t%C3%A9cnica',
+  'hip thrust':'https://www.youtube.com/results?search_query=hip+thrust+t%C3%A9cnica',
+  'remo':'https://www.youtube.com/results?search_query=remo+con+barra+t%C3%A9cnica',
+  'swing':'https://www.youtube.com/results?search_query=kettlebell+swing+t%C3%A9cnica',
+  'bulgara':'https://www.youtube.com/results?search_query=sentadilla+bulgara+t%C3%A9cnica',
+  'tgu':'https://www.youtube.com/results?search_query=turkish+get+up+tutorial',
+  'paloff':'https://www.youtube.com/results?search_query=pallof+press+tutorial',
+  'buenos dias':'https://www.youtube.com/results?search_query=good+mornings+t%C3%A9cnica',
+  'subida al banco':'https://www.youtube.com/results?search_query=step+up+con+barra+t%C3%A9cnica',
+  'remo trx':'https://www.youtube.com/results?search_query=remo+trx+t%C3%A9cnica',
+  'plancha copenhague':'https://www.youtube.com/results?search_query=copenhagen+plank+tutorial',
+  'rotador externo':'https://www.youtube.com/results?search_query=rotacion+externa+hombro+ejercicio',
+  'bicho muerto':'https://www.youtube.com/results?search_query=dead+bug+exercise+tutorial',
+  'renegado':'https://www.youtube.com/results?search_query=renegade+row+tutorial',
+  'press militar':'https://www.youtube.com/results?search_query=press+militar+t%C3%A9cnica',
+  'face pull':'https://www.youtube.com/results?search_query=face+pull+t%C3%A9cnica',
+};
+
+function getExerciseVideo(name) {
+  if (!name) return '';
+  const n = name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  for (const [key, url] of Object.entries(EXERCISE_VIDEOS)) {
+    const k = key.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    if (n.includes(k) || k.includes(n)) return url;
+  }
+  for (const [key, url] of Object.entries(EXERCISE_VIDEOS)) {
+    const k = key.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    const words = k.split(' ');
+    if (words.some(w => w.length > 3 && n.includes(w))) return url;
+  }
+  return '';
+}
+
 // ==================== HELPERS ====================
 function uid() {
   if (crypto && crypto.randomUUID) return crypto.randomUUID();
@@ -1125,14 +1655,29 @@ function normalizeExercise(ex) {
   if (!ex.id) ex.id = uid();
   if (!Array.isArray(ex.sets)) ex.sets = [];
   if (!Array.isArray(ex.setsDone)) ex.setsDone = ex.sets.map(() => false);
-  // Keep setsDone length in sync with sets length
   while (ex.setsDone.length < ex.sets.length) ex.setsDone.push(false);
   while (ex.setsDone.length > ex.sets.length) ex.setsDone.pop();
+  if (!Array.isArray(ex.weights)) ex.weights = [];
+  while (ex.weights.length < ex.sets.length) ex.weights.push(ex.weights.length > 0 ? ex.weights[ex.weights.length-1] : 0);
+  while (ex.weights.length > ex.sets.length) ex.weights.pop();
+  if (ex.weightUnit === undefined) ex.weightUnit = '';
   if (ex.done === undefined) ex.done = false;
   if (ex.secondary === undefined) ex.secondary = false;
   if (ex.note === undefined) ex.note = '';
   if (ex.weight === undefined) ex.weight = '';
+  if (ex.muscleGroup === undefined) ex.muscleGroup = '';
+  if (ex.videoUrl === undefined) ex.videoUrl = '';
   return ex;
+}
+
+function normalizeSection(sec) {
+  if (!sec.id) sec.id = uid();
+  if (!sec.type) sec.type = 'block';
+  if (!sec.name) sec.name = 'Bloque';
+  if (!sec.rounds) sec.rounds = 1;
+  if (!sec.restTime) sec.restTime = 60;
+  sec.exercises = (sec.exercises || []).map(normalizeExercise);
+  return sec;
 }
 
 function normalizeDay(day) {
@@ -1140,14 +1685,18 @@ function normalizeDay(day) {
   if (!day.restTime) day.restTime = 90;
   if (day.subtitle === undefined) day.subtitle = '';
   day.exercises = (day.exercises || []).map(normalizeExercise);
+  if (!Array.isArray(day.sections)) day.sections = [];
+  day.sections = day.sections.map(normalizeSection);
   return day;
 }
 
 function normalizeRoutine(r) {
   if (!r.id) r.id = uid();
   if (!r.name) r.name = 'Rutina';
+  if (r.week === undefined) r.week = 1;
+  if (r.totalWeeks === undefined) r.totalWeeks = 1;
   r.days = (r.days || []).map(normalizeDay);
-  if (!r.days.length) r.days.push(normalizeDay({ name: 'DÍA 1', subtitle: '', restTime: 90, exercises: [] }));
+  if (!r.days.length) r.days.push(normalizeDay({ name: 'DÍA 1', subtitle: '', restTime: 90, exercises: [], sections: [] }));
   return r;
 }
 
@@ -1166,7 +1715,7 @@ function normalizeData(d) {
   }
   if (d.workoutActive === undefined) d.workoutActive = false;
   if (d.workoutStartTs === undefined) d.workoutStartTs = null;
-  if (!d.schema) d.schema = 2;
+  if (!d.schema) d.schema = 3;
   return d;
 }
 
@@ -1203,55 +1752,185 @@ function migrateV1toV2(old) {
   });
 }
 
+// Migrate v2 to v3
+function migrateV2toV3(d) {
+  localStorage.setItem('boom_gym_data_v2_backup', JSON.stringify(d));
+  d.routines.forEach(r => {
+    if (r.week === undefined) r.week = 1;
+    if (r.totalWeeks === undefined) r.totalWeeks = 1;
+    if (r.name === 'Rutina principal') r.name = 'Rutina Gim';
+    r.days.forEach(day => {
+      if (!Array.isArray(day.sections)) day.sections = [];
+      day.exercises.forEach(ex => {
+        if (!Array.isArray(ex.weights)) ex.weights = [];
+        if (ex.weightUnit === undefined) ex.weightUnit = '';
+        if (ex.muscleGroup === undefined) ex.muscleGroup = '';
+        if (ex.videoUrl === undefined) ex.videoUrl = '';
+      });
+    });
+  });
+  const funcional = buildRutinaFuncional();
+  d.routines.push(funcional);
+  d.schema = 3;
+  return normalizeData(d);
+}
+
 // ==================== DEFAULT DATA ====================
-function buildDefaultData() {
-  const routine = {
+function buildCoreInicio() {
+  return {
+    type: 'core', name: 'CORE INICIO', rounds: 2, restTime: 60,
+    exercises: [
+      { name: 'Plancha 1 pie en TRX', sets: [20], note: 'segundos', muscleGroup: 'core' },
+      { name: 'Bicho muerto con pesa y tobillera', sets: [20], note: '', muscleGroup: 'core' },
+      { name: 'Renegado', sets: [8], note: '', muscleGroup: 'core' },
+      { name: 'Elevación de piernas colgado', sets: [8], note: '', muscleGroup: 'core' },
+      { name: 'Plancha Copenhague en TRX', sets: [20], note: 'seg c/lado', muscleGroup: 'core' },
+      { name: 'Abductor de plancha lateral', sets: [15], note: 'c/lado', muscleGroup: 'core' },
+      { name: 'Glúteo medio con polea', sets: [8], note: 'c/lado', muscleGroup: 'piernas' },
+      { name: 'Pallof cangrejo', sets: [5], note: 'c/lado', muscleGroup: 'core' },
+      { name: 'Buenos días', sets: [8], note: '', muscleGroup: 'piernas' },
+      { name: 'Rotador externo con polea', sets: [8], note: 'c/lado', muscleGroup: 'hombros' },
+      { name: 'Rotador externo bajo', sets: [10,10], note: '', muscleGroup: 'hombros' },
+      { name: 'Rotador externo en 4 apoyos', sets: [6,6], note: '', muscleGroup: 'hombros' }
+    ]
+  };
+}
+
+function buildCoreFinal() {
+  return {
+    type: 'core', name: 'CORE FINAL', rounds: 2, restTime: 60,
+    exercises: [
+      { name: 'Turkish Get-Up (TGU)', sets: [3,3], note: 'c/lado', muscleGroup: 'full' },
+      { name: 'Revolver la olla', sets: [10,10], note: 'c/lado', muscleGroup: 'core' },
+      { name: 'Caminata de la valija', sets: [10,10], note: 'pasos c/lado', muscleGroup: 'core' }
+    ]
+  };
+}
+
+function buildRutinaFuncional() {
+  return normalizeRoutine({
     id: uid(),
-    name: 'Rutina principal',
+    name: 'Rutina Funcional',
+    week: 1, totalWeeks: 1,
     days: [
       {
-        id: uid(),
-        name: "DÍA 1", subtitle: "Full Body A", restTime: 90,
-        exercises: [
-          { name: "Sentadilla", weight: "60 kg", sets: [8,8,8,8], note: "" },
-          { name: "Remo en barra", weight: "", sets: [8,8,8], note: "o polea" },
-          { name: "Press plano", weight: "30+10 barra", sets: [8,8,8,8], note: "" },
-          { name: "Isquios", weight: "", sets: [10,10,10], note: "" },
-          { name: "Press militar", weight: "", sets: [8,8,8,8], note: "" },
-          { name: "Abductores", weight: "30 kg", sets: [8,8,8], note: "" },
-          { name: "Aductores", weight: "30 kg", sets: [8,8,8], note: "" },
-          { name: "Dorsales", weight: "40 kg", sets: [10,10,10], note: "o dominadas" },
-          { name: "Bíceps mancuernas", weight: "", sets: [8,8,8,8], note: "" },
-          { name: "Trapecios", weight: "25 kg", sets: [8,8,8], note: "" },
-          { name: "Fondos", weight: "", sets: [8,8,8], note: "" },
-          { name: "Hip Thrusts", weight: "", sets: [8,8,8,8], note: "" },
-          { name: "Abdominales", weight: "", sets: [], note: "Al final" }
+        name: 'DÍA 1', subtitle: 'Aproximar sentadilla!', restTime: 180,
+        exercises: [],
+        sections: [
+          buildCoreInicio(),
+          {
+            type: 'block', name: 'Bloque 1', rounds: 4, restTime: 180,
+            exercises: [
+              { name: 'Sentadilla', sets: [4,4,4,4], weights: [50,60,65,70], weightUnit: 'kg', muscleGroup: 'piernas' },
+              { name: 'Chin Ups', sets: [4,4,4,4], weights: [], weightUnit: '', muscleGroup: 'espalda' },
+              { name: 'Salto al cajón', sets: [6,6,6,6], weights: [30,30,30,30], weightUnit: 'cm', muscleGroup: 'piernas' }
+            ]
+          },
+          {
+            type: 'block', name: 'Bloque 2', rounds: 4, restTime: 180,
+            exercises: [
+              { name: 'Paloma barra', sets: [6,6,6,6], weights: [15,20,25,25], weightUnit: 'kg', muscleGroup: 'piernas' },
+              { name: 'Fondos', sets: [4,4,4,4], weights: [], weightUnit: '', muscleGroup: 'pecho' },
+              { name: 'Press hombros vertical con barra', sets: [6,6,6,6], weights: [20,20,20,20], weightUnit: 'kg', muscleGroup: 'hombros' }
+            ]
+          },
+          {
+            type: 'block', name: 'Bloque 3', rounds: 3, restTime: 180,
+            exercises: [
+              { name: 'Subida al banco con barra', sets: [8,8,8], weights: [10,10,10], weightUnit: 'kg', muscleGroup: 'piernas' },
+              { name: 'Press banco unilateral con mancuerna', sets: [6,6,6], weights: [10,10,10], weightUnit: 'kg', muscleGroup: 'pecho' },
+              { name: 'Remo en banco', sets: [4,4,4], weights: [12,12,15], weightUnit: 'kg', muscleGroup: 'espalda' }
+            ]
+          },
+          buildCoreFinal()
         ]
       },
       {
-        id: uid(),
-        name: "DÍA 2", subtitle: "Full Body B", restTime: 90,
-        exercises: [
-          { name: "Peso muerto", weight: "", sets: [8,8,8,8], note: "" },
-          { name: "Prensa", weight: "", sets: [8,8,8], note: "" },
-          { name: "Cuádriceps", weight: "", sets: [8,8,8], note: "" },
-          { name: "Apertura inclinada", weight: "", sets: [8,8,8,8], note: "" },
-          { name: "Vuelos laterales", weight: "", sets: [8,8,8,8], note: "" },
-          { name: "Bíceps barra W", weight: "", sets: [8,8,8,8], note: "" },
-          { name: "Tríceps", weight: "", sets: [8,8,8], note: "polea, mancuerna o fondos" },
-          { name: "Sentadilla búlgara", weight: "", sets: [8,8,8], note: "opcional" },
-          { name: "Face pulls", weight: "", sets: [10,10,10], note: "" },
-          { name: "Gemelos", weight: "", sets: [12,12,12], note: "" },
-          { name: "Abdominales", weight: "", sets: [], note: "Al final" }
+        name: 'DÍA 2', subtitle: 'Aproximar peso muerto!', restTime: 180,
+        exercises: [],
+        sections: [
+          buildCoreInicio(),
+          {
+            type: 'block', name: 'Bloque 1', rounds: 4, restTime: 180,
+            exercises: [
+              { name: 'Peso muerto', sets: [4,4,4,4], weights: [70,75,75,80], weightUnit: 'kg', muscleGroup: 'piernas' },
+              { name: 'Swing', sets: [8,8,8,8], weights: [12,12,12,12], weightUnit: 'kg', muscleGroup: 'full' },
+              { name: 'Press plano', sets: [8,8,8,8], weights: [40,40,40,40], weightUnit: 'kg', muscleGroup: 'pecho' }
+            ]
+          },
+          {
+            type: 'block', name: 'Bloque 2', rounds: 4, restTime: 180,
+            exercises: [
+              { name: 'Búlgaras con déficit 15cm', sets: [6,6,6,6], weights: [0,5,5,7.5], weightUnit: 'kg', muscleGroup: 'piernas' },
+              { name: 'Estocadas saltadas', sets: [8,8,8,8], weights: [], weightUnit: '', muscleGroup: 'piernas' },
+              { name: 'Pull Up', sets: [3,3,3,3], weights: [], weightUnit: '', note: 'sin banda', muscleGroup: 'espalda' }
+            ]
+          },
+          {
+            type: 'block', name: 'Bloque 3', rounds: 3, restTime: 180,
+            exercises: [
+              { name: 'Hip Thrust', sets: [8,8,8], weights: [40,50,50], weightUnit: 'kg', muscleGroup: 'piernas' },
+              { name: 'Remo TRX', sets: [8,8,8], weights: [], weightUnit: '', muscleGroup: 'espalda' },
+              { name: 'Press vertical unilateral con mancuerna', sets: [8,8,8], weights: [], weightUnit: '', muscleGroup: 'hombros' }
+            ]
+          },
+          buildCoreFinal()
         ]
       }
     ]
-  };
+  });
+}
+
+function buildDefaultData() {
+  const gimRoutine = normalizeRoutine({
+    id: uid(),
+    name: 'Rutina Gim',
+    week: 1, totalWeeks: 1,
+    days: [
+      {
+        name: "DÍA 1", subtitle: "Full Body A", restTime: 90,
+        exercises: [
+          { name: "Sentadilla", weight: "60", sets: [8,8,8,8], weightUnit: 'kg', muscleGroup: 'piernas' },
+          { name: "Remo en barra", weight: "", sets: [8,8,8], note: "o polea", muscleGroup: 'espalda' },
+          { name: "Press plano", weight: "40", sets: [8,8,8,8], weightUnit: 'kg', muscleGroup: 'pecho' },
+          { name: "Isquios", weight: "", sets: [10,10,10], muscleGroup: 'piernas' },
+          { name: "Press militar", weight: "", sets: [8,8,8,8], muscleGroup: 'hombros' },
+          { name: "Abductores", weight: "30", sets: [8,8,8], weightUnit: 'kg', muscleGroup: 'piernas' },
+          { name: "Aductores", weight: "30", sets: [8,8,8], weightUnit: 'kg', muscleGroup: 'piernas' },
+          { name: "Dorsales", weight: "40", sets: [10,10,10], note: "o dominadas", weightUnit: 'kg', muscleGroup: 'espalda' },
+          { name: "Bíceps mancuernas", weight: "", sets: [8,8,8,8], muscleGroup: 'brazos' },
+          { name: "Trapecios", weight: "25", sets: [8,8,8], weightUnit: 'kg', muscleGroup: 'espalda' },
+          { name: "Fondos", weight: "", sets: [8,8,8], muscleGroup: 'pecho' },
+          { name: "Hip Thrusts", weight: "", sets: [8,8,8,8], muscleGroup: 'piernas' },
+          { name: "Abdominales", weight: "", sets: [], note: "Al final", muscleGroup: 'core' }
+        ],
+        sections: []
+      },
+      {
+        name: "DÍA 2", subtitle: "Full Body B", restTime: 90,
+        exercises: [
+          { name: "Peso muerto", weight: "", sets: [8,8,8,8], muscleGroup: 'piernas' },
+          { name: "Prensa", weight: "", sets: [8,8,8], muscleGroup: 'piernas' },
+          { name: "Cuádriceps", weight: "", sets: [8,8,8], muscleGroup: 'piernas' },
+          { name: "Apertura inclinada", weight: "", sets: [8,8,8,8], muscleGroup: 'pecho' },
+          { name: "Vuelos laterales", weight: "", sets: [8,8,8,8], muscleGroup: 'hombros' },
+          { name: "Bíceps barra W", weight: "", sets: [8,8,8,8], muscleGroup: 'brazos' },
+          { name: "Tríceps", weight: "", sets: [8,8,8], note: "polea, mancuerna o fondos", muscleGroup: 'brazos' },
+          { name: "Sentadilla búlgara", weight: "", sets: [8,8,8], note: "opcional", muscleGroup: 'piernas' },
+          { name: "Face pulls", weight: "", sets: [10,10,10], muscleGroup: 'espalda' },
+          { name: "Gemelos", weight: "", sets: [12,12,12], muscleGroup: 'piernas' },
+          { name: "Abdominales", weight: "", sets: [], note: "Al final", muscleGroup: 'core' }
+        ],
+        sections: []
+      }
+    ]
+  });
+  const funcRoutine = buildRutinaFuncional();
   return normalizeData({
-    schema: 2,
-    routines: [routine],
-    activeRoutineId: routine.id,
-    activeDayId: routine.days[0].id,
+    schema: 3,
+    routines: [gimRoutine, funcRoutine],
+    activeRoutineId: gimRoutine.id,
+    activeDayId: gimRoutine.days[0].id,
     workoutActive: false,
     workoutStartTs: null
   });
@@ -1280,12 +1959,14 @@ function loadData() {
     try {
       let d = JSON.parse(saved);
       if (d.days && !d.routines) {
-        // v1 → v2 migration
         d = migrateV1toV2(d);
         localStorage.setItem('boom_gym_data', JSON.stringify(d));
-      } else {
-        d = normalizeData(d);
       }
+      if (d.schema < 3 || !d.schema) {
+        d = migrateV2toV3(d);
+        localStorage.setItem('boom_gym_data', JSON.stringify(d));
+      }
+      d = normalizeData(d);
       return d;
     } catch (e) {
       console.error('loadData parse error', e);
@@ -1295,8 +1976,10 @@ function loadData() {
 }
 
 function saveData() {
-  // Safety net: normalize all exercises before serializing
-  data.routines.forEach(r => r.days.forEach(d => d.exercises.forEach(normalizeExercise)));
+  data.routines.forEach(r => r.days.forEach(d => {
+    d.exercises.forEach(normalizeExercise);
+    (d.sections || []).forEach(sec => sec.exercises.forEach(normalizeExercise));
+  }));
   data.updatedAt = Date.now();
   data.updatedBy = clientId;
   localStorage.setItem('boom_gym_data', JSON.stringify(data));
@@ -1357,86 +2040,135 @@ function renderDayInfo() {
     <span>seg</span>`;
 }
 
+function buildExCardHtml(ex, i, opts) {
+  const { mode='flat', si=-1, exercises, canMove=false, editIdx=-1 } = opts;
+  const addr = mode === 'sec' ? `${si},${i}` : `${i}`;
+  const pfx = mode === 'sec' ? 's_' : '';
+  const uid_key = mode === 'sec' ? `s${si}e${i}` : `${i}`;
+  const isActive = data.workoutActive && mode === 'flat' && i === currentExerciseIdx;
+  const isDone = ex.setsDone && ex.setsDone.length > 0 && ex.setsDone.every(s => s);
+  const isEditing = editIdx === i;
+  const hasWeights = ex.weights && ex.weights.some(w => w > 0);
+  const muscle = ex.muscleGroup || getExerciseMuscle(ex.name);
+  const muscleStyle = muscle ? `style="background:var(--muscle-${muscle})"` : '';
+  const videoUrl = ex.videoUrl || getExerciseVideo(ex.name);
+
+  return `
+  <div class="exercise-card fade-in ${ex.done ? 'ex-done' : ''} ${ex.secondary ? 'secondary' : ''} ${isActive ? 'active-exercise' : ''} ${isDone ? 'completed' : ''}"
+       style="animation-delay:${i*0.02}s" data-idx="${i}"
+       ${mode==='flat'?`draggable="true" ondragstart="onDragStart(event,${i})" ondragover="onDragOver(event,${i})" ondragleave="onDragLeave(event)" ondrop="onDrop(event,${i})" ondragend="onDragEnd(event)"`:''}>
+    ${muscle ? `<div class="exercise-card-bar" ${muscleStyle}></div>` : ''}
+    <div class="exercise-content">
+      <div class="exercise-row">
+        <div class="exercise-icon">${getExerciseIcon(ex.name)}</div>
+        <div class="exercise-body">
+          <div class="exercise-top">
+            <button class="btn-check ${ex.done?'checked':''}" onclick="${pfx}toggleDone(${addr})">✓</button>
+            <div class="exercise-name">
+              <input value="${escHtml(ex.name)}" onchange="${pfx}updateField(${addr},'name',this.value)" onfocus="this.select()" placeholder="Nombre">
+            </div>
+            ${muscle ? `<span class="muscle-tag mt-${muscle}">${muscle.toUpperCase()}</span>` : ''}
+            <div class="exercise-actions">
+              <button class="btn-more" onclick="toggleActions(event,'${uid_key}')">⋯</button>
+              <div class="action-btns" id="actions-${uid_key}">
+                <button class="btn-icon btn-star ${ex.secondary?'active':''}" onclick="${pfx}toggleSecondary(${addr})">${ex.secondary?'☆':'★'}</button>
+                ${mode==='flat' && i > 0 ? `<button class="btn-icon btn-up" onclick="moveExercise(${i},-1)">▲</button>` : ''}
+                ${mode==='flat' && i < exercises.length-1 ? `<button class="btn-icon btn-down" onclick="moveExercise(${i},1)">▼</button>` : ''}
+                <button class="btn-icon btn-dup" onclick="${pfx}duplicateExercise(${addr})">⧉</button>
+                ${canMove && mode==='flat' ? `<button class="btn-icon btn-move" onclick="openMoveExercise(${i})">→</button>` : ''}
+                ${videoUrl ? `<button class="btn-icon" onclick="toggleInfo('${uid_key}')" title="Info">ℹ</button>` : ''}
+                <button class="btn-icon btn-del" onclick="${pfx}removeExercise(${addr})">✕</button>
+              </div>
+            </div>
+          </div>
+          <div class="exercise-meta-row">
+            ${!hasWeights ? `<div class="meta-tag">
+              <span class="label">Peso</span>
+              <input value="${escHtml(ex.weight)}" onchange="${pfx}updateField(${addr},'weight',this.value)" placeholder="—" onfocus="this.select()">
+            </div>` : `<div class="meta-tag"><span class="label">${escHtml(ex.weightUnit||'kg')}</span></div>`}
+            <div class="meta-tag"><span class="label">×${ex.sets.length}</span></div>
+          </div>
+          <div class="sets-row ${isEditing ? 'sets-editing' : ''}">
+            ${ex.sets.map((rep, setI) => {
+              let cls = hasWeights ? '' : 'no-weights';
+              if (ex.setsDone && ex.setsDone[setI]) cls += ' done';
+              else if (data.workoutActive && mode === 'flat' && i === currentExerciseIdx && setI === currentSetIdx) cls += ' current';
+              const w = (ex.weights && ex.weights[setI]) || 0;
+              return `<div class="set-chip ${cls}" data-set-key="${mode}-${i}-${setI}" onclick="${pfx}clickSet(${addr},${setI})">
+                <input class="chip-weight" value="${w||''}" onchange="${pfx}updateSetWeight(${addr},${setI},this.value)" onfocus="this.select()" type="number" inputmode="decimal" placeholder="—">
+                <input class="chip-reps" value="${rep}" onchange="${pfx}updateSet(${addr},${setI},this.value)" onfocus="this.select()" type="number" inputmode="numeric">
+                <span class="set-remove" onclick="event.stopPropagation();${pfx}removeSet(${addr},${setI})">✕</span>
+              </div>`;
+            }).join('')}
+            <div class="set-actions">
+              <button class="set-btn" onclick="${pfx}addSet(${addr})">+</button>
+              ${ex.sets.length > 0 ? `<button class="set-btn set-edit-toggle ${isEditing?'active':''}"
+                onclick="toggleSetsEdit(${i})">${isEditing?'✓':'−'}</button>` : ''}
+            </div>
+          </div>
+          <div class="exercise-note">
+            <input value="${escHtml(ex.note||'')}" onchange="${pfx}updateField(${addr},'note',this.value)" placeholder="Nota...">
+          </div>
+          ${videoUrl ? `<div class="exercise-info" id="info-${uid_key}">
+            <input value="${escHtml(ex.videoUrl||'')}" onchange="${pfx}updateField(${addr},'videoUrl',this.value)" placeholder="URL video...">
+            <a class="info-link" href="${escHtml(videoUrl)}" target="_blank" rel="noopener">▶ Ver video</a>
+          </div>` : ''}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
 function renderExercises() {
   const list = document.getElementById('exerciseList');
   const day = getActiveDay();
-  const exercises = day.exercises;
   const routine = getActiveRoutine();
   const canMove = routine.days.length > 1;
 
+  if (day.sections && day.sections.length > 0) {
+    renderSections(list, day, canMove);
+    return;
+  }
+
+  const exercises = day.exercises;
   if (!exercises.length) {
     list.innerHTML = `<div class="empty-state"><div class="empty-icon">🏋️</div>
       <div>No hay ejercicios</div><div style="font-size:11px;margin-top:4px">Tocá + para empezar</div></div>`;
     return;
   }
 
-  list.innerHTML = exercises.map((ex, i) => {
-    const isActive = data.workoutActive && i === currentExerciseIdx;
-    const isDone = ex.setsDone && ex.setsDone.length > 0 && ex.setsDone.every(s => s);
-    const isEditingSets = editingSetsIdx === i;
-    return `
-    <div class="exercise-card fade-in ${ex.done ? 'ex-done' : ''} ${ex.secondary ? 'secondary' : ''} ${isActive ? 'active-exercise' : ''} ${isDone ? 'completed' : ''}"
-         style="animation-delay:${i*0.02}s" data-idx="${i}"
-         draggable="true" ondragstart="onDragStart(event,${i})" ondragover="onDragOver(event,${i})"
-         ondragleave="onDragLeave(event)" ondrop="onDrop(event,${i})" ondragend="onDragEnd(event)">
+  list.innerHTML = exercises.map((ex, i) =>
+    buildExCardHtml(ex, i, { mode:'flat', exercises, canMove, editIdx: editingSetsIdx })
+  ).join('');
+}
 
-      <div class="exercise-content">
-        <div class="exercise-row">
-          <div class="exercise-icon">
-            ${getExerciseIcon(ex.name)}
-          </div>
-          <div class="exercise-body">
-            <div class="exercise-top">
-              <button class="btn-check ${ex.done ? 'checked' : ''}" onclick="toggleDone(${i})">✓</button>
-              <div class="exercise-name">
-                <input value="${escHtml(ex.name)}" onchange="updateField(${i},'name',this.value)"
-                       onfocus="this.select()" placeholder="Nombre">
-              </div>
-              <div class="exercise-meta">
-                <div class="meta-tag">
-                  <span class="label">Peso</span>
-                  <input value="${escHtml(ex.weight)}" onchange="updateField(${i},'weight',this.value)" placeholder="—" onfocus="this.select()">
-                </div>
-                <div class="meta-tag">
-                  <span class="label">×${ex.sets.length}</span>
-                </div>
-              </div>
-              <div class="exercise-actions">
-                <button class="btn-more" onclick="toggleActions(event,${i})">⋯</button>
-                <div class="action-btns" id="actions-${i}">
-                  <button class="btn-icon btn-star ${ex.secondary?'active':''}" title="${ex.secondary?'Principal':'Secundario'}" onclick="toggleSecondary(${i})">${ex.secondary?'☆':'★'}</button>
-                  ${i > 0 ? `<button class="btn-icon btn-up" onclick="moveExercise(${i},-1)">▲</button>` : ''}
-                  ${i < exercises.length-1 ? `<button class="btn-icon btn-down" onclick="moveExercise(${i},1)">▼</button>` : ''}
-                  <button class="btn-icon btn-dup" onclick="duplicateExercise(${i})">⧉</button>
-                  ${canMove ? `<button class="btn-icon btn-move" title="Mover a día..." onclick="openMoveExercise(${i})">→</button>` : ''}
-                  <button class="btn-icon btn-del" onclick="removeExercise(${i})">✕</button>
-                </div>
-              </div>
-            </div>
-            <div class="sets-row ${isEditingSets ? 'sets-editing' : ''}">
-              ${ex.sets.map((rep, si) => {
-                let cls = '';
-                if (ex.setsDone && ex.setsDone[si]) cls = 'done';
-                else if (data.workoutActive && i === currentExerciseIdx && si === currentSetIdx) cls = 'current';
-                return `<div class="set-chip ${cls}" onclick="clickSet(${i},${si})">
-                  <input value="${rep}" onchange="updateSet(${i},${si},this.value)" onfocus="this.select()" type="number" inputmode="numeric">
-                  <span class="set-remove" onclick="event.stopPropagation();removeSet(${i},${si})">✕</span>
-                </div>`;
-              }).join('')}
-              <div class="set-actions">
-                <button class="set-btn" onclick="addSet(${i})">+</button>
-                ${ex.sets.length > 0 ? `<button class="set-btn set-edit-toggle ${isEditingSets?'active':''}"
-                  onclick="toggleSetsEdit(${i})">${isEditingSets?'✓':'−'}</button>` : ''}
-              </div>
-            </div>
-            <div class="exercise-note">
-              <input value="${escHtml(ex.note||'')}" onchange="updateField(${i},'note',this.value)" placeholder="Nota...">
-            </div>
-          </div>
-        </div>
+function renderSections(list, day, canMove) {
+  let html = '';
+  day.sections.forEach((sec, si) => {
+    const typeClass = sec.type === 'core' ? 'core-type' : 'block-type';
+    html += `<div class="section-block ${typeClass}">
+      <div class="section-header">
+        <span class="section-name">${escHtml(sec.name)}</span>
+        <span class="section-badge">×${sec.rounds}</span>
+        ${sec.restTime > 60 ? `<span class="section-rest-info">${Math.floor(sec.restTime/60)}min pausa</span>` : ''}
+      </div>
+      <div class="section-exercises">
+        ${sec.exercises.map((ex, ei) =>
+          buildExCardHtml(ex, ei, { mode:'sec', si, exercises: sec.exercises, canMove: false, editIdx: editingSetsIdx })
+        ).join('')}
       </div>
     </div>`;
-  }).join('');
+  });
+  if (!day.sections.length && !day.exercises.length) {
+    html = `<div class="empty-state"><div class="empty-icon">🏋️</div>
+      <div>No hay ejercicios</div></div>`;
+  }
+  list.innerHTML = html;
+}
+
+function toggleInfo(uid_key) {
+  const el = document.getElementById('info-' + uid_key);
+  if (el) el.classList.toggle('open');
 }
 
 function escHtml(s) { return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -1459,7 +2191,6 @@ function updateWorkoutButton() {
 function toggleDone(idx) {
   const ex = getActiveDay().exercises[idx];
   ex.done = !ex.done;
-  // If manually marked done, fill setsDone. If unmarked, clear them.
   if (ex.done) ex.setsDone = ex.sets.map(() => true);
   else ex.setsDone = ex.sets.map(() => false);
   saveData();
@@ -1540,6 +2271,10 @@ function duplicateDay() {
   copy.id = uid();
   copy.name += ' (copia)';
   copy.exercises.forEach(ex => { ex.id = uid(); ex.done = false; ex.setsDone = ex.sets.map(() => false); });
+  (copy.sections || []).forEach(sec => {
+    sec.id = uid();
+    sec.exercises.forEach(ex => { ex.id = uid(); ex.done = false; ex.setsDone = ex.sets.map(() => false); });
+  });
   const idx = r.days.findIndex(d => d.id === day.id);
   r.days.splice(idx + 1, 0, copy);
   data.activeDayId = copy.id;
@@ -1551,7 +2286,7 @@ function renameDayPrompt() {
   if (name?.trim()) { day.name = name.trim(); saveData(); renderAll(); }
 }
 
-// ==================== EXERCISE MANAGEMENT ====================
+// ==================== EXERCISE MANAGEMENT (flat mode) ====================
 function updateField(i, field, value) {
   getActiveDay().exercises[i][field] = value;
   saveData();
@@ -1560,10 +2295,18 @@ function updateSet(i, si, value) {
   getActiveDay().exercises[i].sets[si] = parseInt(value) || 0;
   saveData();
 }
+function updateSetWeight(i, si, value) {
+  const ex = getActiveDay().exercises[i];
+  if (!ex.weights) ex.weights = ex.sets.map(() => 0);
+  ex.weights[si] = parseFloat(value) || 0;
+  saveData();
+}
 function addSet(i) {
   const ex = getActiveDay().exercises[i];
   ex.sets.push(ex.sets.length > 0 ? ex.sets[ex.sets.length-1] : 8);
   ex.setsDone.push(false);
+  if (ex.weights && ex.weights.length > 0) ex.weights.push(ex.weights[ex.weights.length-1]);
+  else if (ex.weights) ex.weights.push(0);
   saveData();
   renderExercises();
 }
@@ -1571,6 +2314,7 @@ function removeSet(i, si) {
   const ex = getActiveDay().exercises[i];
   ex.sets.splice(si, 1);
   if (ex.setsDone) ex.setsDone.splice(si, 1);
+  if (ex.weights) ex.weights.splice(si, 1);
   if (!ex.sets.length) editingSetsIdx = -1;
   saveData();
   renderExercises();
@@ -1584,9 +2328,76 @@ function toggleSecondary(i) {
   toast(ex.secondary ? 'Marcado como secundario' : 'Marcado como principal');
 }
 
+// ==================== EXERCISE MANAGEMENT (section mode) ====================
+function _secEx(si, ei) { return getActiveDay().sections[si].exercises[ei]; }
+function s_updateField(si, ei, field, value) { _secEx(si,ei)[field] = value; saveData(); }
+function s_updateSet(si, ei, setI, value) { _secEx(si,ei).sets[setI] = parseInt(value) || 0; saveData(); }
+function s_updateSetWeight(si, ei, setI, value) {
+  const ex = _secEx(si,ei);
+  if (!ex.weights) ex.weights = ex.sets.map(() => 0);
+  ex.weights[setI] = parseFloat(value) || 0;
+  saveData();
+}
+function s_addSet(si, ei) {
+  const ex = _secEx(si,ei);
+  ex.sets.push(ex.sets.length > 0 ? ex.sets[ex.sets.length-1] : 8);
+  ex.setsDone.push(false);
+  if (ex.weights && ex.weights.length > 0) ex.weights.push(ex.weights[ex.weights.length-1]);
+  else if (ex.weights) ex.weights.push(0);
+  saveData(); renderExercises();
+}
+function s_removeSet(si, ei, setI) {
+  const ex = _secEx(si,ei);
+  ex.sets.splice(setI, 1);
+  if (ex.setsDone) ex.setsDone.splice(setI, 1);
+  if (ex.weights) ex.weights.splice(setI, 1);
+  saveData(); renderExercises();
+}
+function s_toggleSecondary(si, ei) {
+  const ex = _secEx(si,ei); ex.secondary = !ex.secondary;
+  saveData(); renderExercises();
+  toast(ex.secondary ? 'Marcado como secundario' : 'Marcado como principal');
+}
+function s_toggleDone(si, ei) {
+  const ex = _secEx(si,ei); ex.done = !ex.done;
+  if (ex.done) ex.setsDone = ex.sets.map(() => true);
+  else ex.setsDone = ex.sets.map(() => false);
+  saveData(); renderExercises();
+}
+function s_clickSet(si, ei, setI) {
+  const ex = _secEx(si,ei);
+  if (!data.workoutActive) return;
+  if (!ex.setsDone) ex.setsDone = ex.sets.map(() => false);
+  const wasDone = ex.setsDone[setI];
+  ex.setsDone[setI] = !ex.setsDone[setI];
+  if (navigator.vibrate) navigator.vibrate(ex.setsDone[setI] ? 50 : 30);
+  if (ex.setsDone[setI] && !wasDone) {
+    const chips = document.querySelectorAll(`[data-set-key="sec-${si}_${ei}-${setI}"]`);
+    chips.forEach(c => { c.classList.add('just-done'); setTimeout(() => c.classList.remove('just-done'), 600); });
+  }
+  const allDone = ex.setsDone.length > 0 && ex.setsDone.every(s => s);
+  ex.done = allDone;
+  saveData(); renderExercises();
+}
+function s_duplicateExercise(si, ei) {
+  const sec = getActiveDay().sections[si];
+  const copy = JSON.parse(JSON.stringify(sec.exercises[ei]));
+  copy.id = uid(); copy.name += ' (copia)'; copy.done = false;
+  copy.setsDone = copy.sets.map(() => false);
+  sec.exercises.splice(ei+1, 0, copy);
+  saveData(); renderExercises();
+}
+function s_removeExercise(si, ei) {
+  const sec = getActiveDay().sections[si];
+  if (!confirm(`¿Eliminar "${sec.exercises[ei].name}"?`)) return;
+  sec.exercises.splice(ei, 1);
+  saveData(); renderExercises();
+}
+
 function toggleActions(e, idx) {
   e.stopPropagation();
   const menu = document.getElementById('actions-' + idx);
+  if (!menu) return;
   const isOpen = menu.classList.contains('open');
   document.querySelectorAll('.action-btns.open').forEach(m => m.classList.remove('open'));
   if (!isOpen) menu.classList.add('open');
@@ -1729,14 +2540,29 @@ function startWorkoutTimer() {
 }
 
 function confirmFinishWorkout() {
-  // Reset done flags + setsDone on the active day only
   const day = getActiveDay();
+  const elapsed = workoutSeconds;
   day.exercises.forEach(ex => {
     ex.done = false;
     ex.setsDone = ex.sets.map(() => false);
   });
-  stopWorkoutImmediate();
-  toast('Rutina finalizada');
+  (day.sections || []).forEach(sec => {
+    sec.exercises.forEach(ex => {
+      ex.done = false;
+      ex.setsDone = ex.sets.map(() => false);
+    });
+  });
+  data.workoutActive = false;
+  data.workoutStartTs = null;
+  clearInterval(workoutTimer);
+  clearInterval(restTimerInterval);
+  document.getElementById('restOverlay').classList.remove('visible');
+  currentExerciseIdx = -1; currentSetIdx = -1; editingSetsIdx = -1;
+  workoutSeconds = 0;
+  saveData();
+  updateWorkoutButton();
+  renderExercises();
+  showCompletionOverlay(elapsed);
 }
 
 function stopWorkoutImmediate() {
@@ -1767,7 +2593,13 @@ function clickSet(ei, si) {
   const day = getActiveDay();
   const ex = day.exercises[ei];
   if (!ex.setsDone) ex.setsDone = ex.sets.map(() => false);
+  const wasDone = ex.setsDone[si];
   ex.setsDone[si] = !ex.setsDone[si];
+  if (navigator.vibrate) navigator.vibrate(ex.setsDone[si] ? 50 : 30);
+  if (ex.setsDone[si] && !wasDone) {
+    const chips = document.querySelectorAll(`[data-set-key="flat-${ei}-${si}"]`);
+    chips.forEach(c => { c.classList.add('just-done'); setTimeout(() => c.classList.remove('just-done'), 600); });
+  }
   const allDone = ex.setsDone.length > 0 && ex.setsDone.every(s => s);
   if (allDone) {
     ex.done = true;
@@ -1867,13 +2699,10 @@ function handleImport(event) {
   r.onload = (e) => {
     try {
       let d = JSON.parse(e.target.result);
-      if (d.days && !d.routines) {
-        d = migrateV1toV2(d);
-      } else if (d.routines) {
-        d = normalizeData(d);
-      } else {
-        toast('Formato inválido'); return;
-      }
+      if (d.days && !d.routines) d = migrateV1toV2(d);
+      if (d.routines && (!d.schema || d.schema < 3)) d = migrateV2toV3(d);
+      if (d.routines) { d = normalizeData(d); }
+      else { toast('Formato inválido'); return; }
       data = d;
       saveData(); renderAll(); toast('Importado');
     } catch { toast('Error al leer'); }
@@ -1956,6 +2785,43 @@ window.__refreshAccountUI = () => {
     btn.style.padding = '';
   }
 };
+
+// ==================== CELEBRATION ====================
+function launchConfetti() {
+  const container = document.createElement('div');
+  container.className = 'confetti-container';
+  document.body.appendChild(container);
+  const colors = ['#ff2e93','#00ff9d','#a66bff','#ff8a1f','#00e5ff','#c6ff3d','#ff6b6b','#f9ca24'];
+  for (let i = 0; i < 80; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = (Math.random() * 0.8) + 's';
+    piece.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    piece.style.width = (5 + Math.random() * 6) + 'px';
+    piece.style.height = (8 + Math.random() * 10) + 'px';
+    piece.style.transform = `rotate(${Math.random()*360}deg)`;
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.remove(), 4000);
+}
+
+function showCompletionOverlay(elapsed) {
+  launchConfetti();
+  if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]);
+  const overlay = document.createElement('div');
+  overlay.className = 'completion-overlay';
+  overlay.innerHTML = `
+    <div class="comp-icon">&#x1F3C6;</div>
+    <div class="comp-title">RUTINA COMPLETA</div>
+    <div class="comp-time">${formatTime(elapsed)}</div>
+    <div class="comp-sub">Buen trabajo</div>
+    <button class="comp-dismiss" onclick="this.closest('.completion-overlay').remove()">CONTINUAR</button>
+  `;
+  document.body.appendChild(overlay);
+  setTimeout(() => { if (overlay.parentNode) overlay.remove(); }, 15000);
+}
 
 // ==================== INIT ====================
 function init() {
