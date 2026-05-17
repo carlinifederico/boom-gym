@@ -8,6 +8,7 @@
 <title>BOOM GYM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -300,10 +301,12 @@ input, button { font-family: inherit; }
   display: flex; gap: 6px; align-items: center;
 }
 .exercise-icon {
-  flex-shrink: 0; width: 36px; height: 36px; display: flex;
+  flex-shrink: 0; width: 52px; height: 52px; display: flex;
   align-items: center; justify-content: center;
+  border-radius: 6px; overflow: hidden; background: var(--surface2);
 }
-.exercise-icon svg { width: 36px; height: 36px; }
+.exercise-icon img { width: 52px; height: 52px; object-fit: cover; display: block; }
+.exercise-icon svg { width: 28px; height: 28px; }
 .exercise-body { flex: 1; min-width: 0; }
 
 /* Check button */
@@ -959,617 +962,157 @@ input, button { font-family: inherit; }
 </script>
 
 <script>
-// ==================== EXERCISE ICON SYSTEM ====================
-// Small 28x28 SVGs representing each exercise visually
+// ==================== EXERCISE IMAGE SYSTEM ====================
+// Real exercise photos from Free Exercise DB (github.com/yuhonas/free-exercise-db)
+// Served via jsDelivr CDN with lazy loading and SVG fallback
 
-const EXERCISE_ICONS = {
-  // Barbell squat - person squatting with bar
-  'sentadilla': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="4" r="2.5" fill="#a0a0b0"/>
-    <line x1="4" y1="7" x2="24" y2="7" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="3" cy="7" r="2" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="25" cy="7" r="2" fill="#6c5ce7" opacity="0.7"/>
-    <path d="M14 7 L14 14 L9 21 M14 14 L19 21" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="11" y1="9" x2="17" y2="9" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Barbell row - bent over with bar
-  'remo': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="5" r="2.5" fill="#a0a0b0"/>
-    <path d="M10 8 L14 16 L10 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14 " y1="16" x2="19" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="16" x2="8" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="4" y1="20" x2="22" y2="20" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="3" cy="20" r="2" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="23" cy="20" r="2" fill="#6c5ce7" opacity="0.7"/>
-  </svg>`,
-  // Bench press - person on bench
-  'press plano': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="16" width="20" height="3" rx="1.5" fill="#3a3a4a"/>
-    <circle cx="14" cy="14" r="2.5" fill="#a0a0b0"/>
-    <rect x="8" y="15" width="12" height="2" rx="1" fill="#a0a0b0" opacity="0.5"/>
-    <line x1="3" y1="8" x2="25" y2="8" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="2" cy="8" r="2" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="26" cy="8" r="2" fill="#6c5ce7" opacity="0.7"/>
-    <line x1="10" y1="14" x2="7" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="14" x2="21" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="12" y="19" width="1.5" height="6" rx="0.5" fill="#3a3a4a"/>
-    <rect x="14.5" y="19" width="1.5" height="6" rx="0.5" fill="#3a3a4a"/>
-  </svg>`,
-  // Leg curl machine
-  'isquios': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="10" width="18" height="3" rx="1.5" fill="#3a3a4a"/>
-    <circle cx="8" cy="8" r="2.5" fill="#a0a0b0"/>
-    <path d="M8 10 L8 13 L18 13" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 13 L22 8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="20" y="6" width="5" height="4" rx="1" fill="#6c5ce7" opacity="0.6"/>
-    <rect x="3" y="13" width="2" height="10" rx="1" fill="#3a3a4a"/>
-  </svg>`,
-  // Overhead press - person pressing bar overhead
-  'press militar': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="10" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="13" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="10" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="5" y1="4" x2="23" y2="4" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="4" cy="4" r="2" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="24" cy="4" r="2" fill="#6c5ce7" opacity="0.7"/>
-    <line x1="10" y1="13" x2="7" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="13" x2="21" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Hip abduction machine
-  'abductores': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="5" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="8" x2="14" y2="15" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="15" x2="6" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="15" x2="22" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M6 23 L3 23 M22 23 L25 23" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-  </svg>`,
-  // Hip adduction
-  'aductores': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="5" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="8" x2="14" y2="15" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="15" x2="10" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="15" x2="18" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M8 19 L14 22 L20 19" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-  </svg>`,
-  // Lat pulldown
-  'dorsales': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="4" y1="3" x2="24" y2="3" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round"/>
-    <line x1="14" y1="3" x2="14" y2="6" stroke="#3a3a4a" stroke-width="1.5"/>
-    <path d="M8 6 L14 6 L20 6" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="14" cy="11" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="14" x2="14" y2="21" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="10" y1="14" x2="8" y2="7" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="14" x2="20" y2="7" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="10" y1="23" x2="14" y2="21" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="23" x2="14" y2="21" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Pull-up bar
-  'dominadas': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="3" y1="3" x2="25" y2="3" stroke="#6c5ce7" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="14" cy="9" r="2.5" fill="#a0a0b0"/>
-    <line x1="10" y1="9" x2="8" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="9" x2="20" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="12" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="11" y1="23" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="17" y1="23" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Dumbbell curl
-  'biceps': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="10" y="3" width="8" height="3" rx="1" fill="#6c5ce7"/>
-    <rect x="12" y="1" width="4" height="7" rx="1" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="14" cy="14" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="17" x2="14" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="14" x2="20" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 14 L9 10 L14 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-  </svg>`,
-  // Shrug with dumbbells
-  'trapecios': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="5" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="8" x2="14" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="10" y1="8" x2="6" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="8" x2="22" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="3" y="15" width="6" height="3" rx="1" fill="#6c5ce7"/>
-    <rect x="19" y="15" width="6" height="3" rx="1" fill="#6c5ce7"/>
-    <path d="M11 6 L14 3 L17 6" stroke="#e17055" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-  </svg>`,
-  // Dips on parallel bars
-  'fondos': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="5" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="8" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="10" y1="8" x2="6" y2="12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="8" x2="22" y2="12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="3" y1="12" x2="25" y2="12" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <line x1="11" y1="18" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="17" y1="18" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Hip thrust
-  'hip thrust': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2" y="14" width="10" height="4" rx="2" fill="#3a3a4a"/>
-    <circle cx="16" cy="10" r="2.5" fill="#a0a0b0"/>
-    <path d="M12 14 L16 10 L16 14 L20 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <line x1="10" y1="11" x2="22" y2="11" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="9" cy="11" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="23" cy="11" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-  </svg>`,
-  // Abs crunch
-  'abdominales': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="18" cy="8" r="2.5" fill="#a0a0b0"/>
-    <path d="M18 11 Q14 14 12 18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <path d="M12 18 L8 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M12 18 L16 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="8" y="13" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.6"/>
-    <rect x="8" y="16" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.6"/>
-    <rect x="12" y="13" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.6"/>
-    <rect x="12" y="16" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.6"/>
-  </svg>`,
-  // Deadlift
-  'peso muerto': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="4" r="2.5" fill="#a0a0b0"/>
-    <path d="M14 7 L14 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 14 L10 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 14 L18 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="10" y1="7" x2="7" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="7" x2="21" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="4" y1="19" x2="24" y2="19" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="3" cy="19" r="2" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="25" cy="19" r="2" fill="#6c5ce7" opacity="0.7"/>
-  </svg>`,
-  // Leg press machine
-  'prensa': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="8" cy="8" r="2.5" fill="#a0a0b0"/>
-    <path d="M8 11 L8 16 L16 12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <rect x="16" y="8" width="8" height="8" rx="2" fill="#6c5ce7" opacity="0.5"/>
-    <line x1="16" y1="12" x2="24" y2="12" stroke="#6c5ce7" stroke-width="1.5"/>
-    <path d="M8 16 L6 22 M8 16 L10 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Leg extension
-  'cuadriceps': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="8" width="12" height="4" rx="2" fill="#3a3a4a"/>
-    <circle cx="10" cy="6" r="2.5" fill="#a0a0b0"/>
-    <path d="M10 8 L10 12 L18 18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <rect x="17" y="16" width="6" height="4" rx="1" fill="#6c5ce7" opacity="0.6"/>
-    <rect x="4" y="12" width="2" height="10" rx="1" fill="#3a3a4a"/>
-  </svg>`,
-  // Chest fly
-  'apertura': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="10" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="13" x2="14" y2="22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 13 Q4 10 4 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <path d="M18 13 Q24 10 24 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <rect x="2" y="4" width="4" height="3" rx="1" fill="#6c5ce7"/>
-    <rect x="22" y="4" width="4" height="3" rx="1" fill="#6c5ce7"/>
-  </svg>`,
-  // Lateral raise
-  'vuelos laterales': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="8" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="11" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="10" y1="11" x2="4" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="11" x2="24" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="2" y="6" width="3" height="4" rx="1" fill="#6c5ce7"/>
-    <rect x="23" y="6" width="3" height="4" rx="1" fill="#6c5ce7"/>
-    <line x1="11" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="17" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Barbell curl (W bar)
-  'biceps barra': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="6" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="9" x2="14" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 9 L8 14 L14 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <path d="M18 9 L20 14 L14 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <path d="M5 16 L9 15 L12 16 L16 16 L19 15 L23 16" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round" fill="none"/>
-    <circle cx="4" cy="16" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="24" cy="16" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-  </svg>`,
-  // Triceps pushdown
-  'triceps': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="14" y1="2" x2="14" y2="6" stroke="#3a3a4a" stroke-width="1.5"/>
-    <line x1="9" y1="6" x2="19" y2="6" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="14" cy="10" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="13" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 10 L10 7" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 10 L18 7" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="11" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="17" y1="22" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Bulgarian split squat
-  'sentadilla bulgara': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="4" r="2.5" fill="#a0a0b0"/>
-    <line x1="10" y1="7" x2="10" y2="14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 14 L7 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 14 L16 18 L20 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <rect x="19" y="14" width="6" height="3" rx="1.5" fill="#3a3a4a"/>
-  </svg>`,
-  // Face pull with rope
-  'face pull': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="22" y="3" width="3" height="22" rx="1.5" fill="#3a3a4a"/>
-    <circle cx="10" cy="8" r="2.5" fill="#a0a0b0"/>
-    <line x1="10" y1="11" x2="10" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="11" x2="22" y2="10" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="8" x2="22" y2="10" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 8 L14 11" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Calf raise
-  'gemelos': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="4" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="7" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="12" y1="16" x2="12" y2="22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="16" y1="16" x2="16" y2="22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <ellipse cx="12" cy="19" rx="2" ry="3" fill="#e17055" opacity="0.5"/>
-    <ellipse cx="16" cy="19" rx="2" ry="3" fill="#e17055" opacity="0.5"/>
-    <rect x="8" y="22" width="12" height="3" rx="1" fill="#3a3a4a"/>
-    <path d="M11 22 L11 20 M17 22 L17 20" stroke="#a0a0b0" stroke-width="1" stroke-linecap="round"/>
-  </svg>`,
-  // Incline press
-  'press inclinado': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 22 L10 10 L16 10 L16 22" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round" fill="none"/>
-    <circle cx="13" cy="8" r="2.5" fill="#a0a0b0"/>
-    <line x1="4" y1="4" x2="22" y2="4" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="3" cy="4" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="23" cy="4" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-    <line x1="10" y1="8" x2="7" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="16" y1="8" x2="19" y2="4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Cable pulldown
-  'jalon': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="4" y1="3" x2="24" y2="3" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round"/>
-    <line x1="14" y1="3" x2="14" y2="7" stroke="#3a3a4a" stroke-width="1.5"/>
-    <line x1="8" y1="7" x2="20" y2="7" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="14" cy="12" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="15" x2="14" y2="22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="10" y1="12" x2="9" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="12" x2="19" y2="8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Cable row
-  'remo polea': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="22" y="5" width="3" height="18" rx="1.5" fill="#3a3a4a"/>
-    <circle cx="10" cy="8" r="2.5" fill="#a0a0b0"/>
-    <line x1="10" y1="11" x2="10" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="11" x2="22" y2="14" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 11 L14 11" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 16 L7 22 M10 16 L13 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Plank position
-  'plancha': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="22" cy="10" r="2.5" fill="#a0a0b0"/>
-    <line x1="5" y1="14" x2="20" y2="12" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
-    <line x1="20" y1="12" x2="20" y2="18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="5" y1="14" x2="5" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Romanian deadlift
-  'peso muerto rumano': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="4" r="2.5" fill="#a0a0b0"/>
-    <path d="M12 7 Q14 12 16 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <line x1="12" y1="10" x2="18" y2="10" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 7 L8 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 7 L16 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="4" y1="15" x2="20" y2="15" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="3" cy="15" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="21" cy="15" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-    <line x1="16" y1="16" x2="14" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="16" y1="16" x2="18" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Walking lunge
-  'zancadas': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="4" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="7" x2="14" y2="15" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 15 L8 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 15 L20 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="8" y1="23" x2="5" y2="23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Chin ups (underhand pull-up)
-  'chin ups': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="3" y1="3" x2="25" y2="3" stroke="#6c5ce7" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="14" cy="9" r="2.5" fill="#a0a0b0"/>
-    <path d="M10 9 L9 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 9 L19 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="12" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M11 23 L14 20 L17 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <rect x="8" y="11" rx="1" width="3" height="2" fill="#e17055" opacity="0.5"/>
-    <rect x="17" y="11" rx="1" width="3" height="2" fill="#e17055" opacity="0.5"/>
-  </svg>`,
-  // Box jump
-  'salto al cajon': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="6" y="16" width="16" height="10" rx="1.5" fill="#3a3a4a"/>
-    <rect x="8" y="18" width="12" height="6" rx="1" fill="#6c5ce7" opacity="0.3"/>
-    <circle cx="14" cy="6" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="9" x2="14" y2="14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 9 L8 12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 9 L20 12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M12 15 L14 14 L16 15" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-  </svg>`,
-  // Paloma (barbell row variant)
-  'paloma': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="6" r="2.5" fill="#a0a0b0"/>
-    <path d="M10 9 L12 15 L8 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <path d="M12 15 L17 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="4" y1="17" x2="22" y2="17" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="3" cy="17" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="23" cy="17" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-    <path d="M12 15 L9 12" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Press hombros vertical (overhead press with bar)
-  'press hombros': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="10" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="13" x2="14" y2="21" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 22 L14 21 L18 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <line x1="5" y1="4" x2="23" y2="4" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="4" cy="4" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-    <circle cx="24" cy="4" r="1.5" fill="#6c5ce7" opacity="0.7"/>
-    <path d="M10 13 L8 5" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 13 L20 5" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Step-up with barbell
-  'subida al banco': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="10" y="16" width="14" height="10" rx="1.5" fill="#3a3a4a"/>
-    <circle cx="12" cy="5" r="2.5" fill="#a0a0b0"/>
-    <line x1="5" y1="8" x2="19" y2="8" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
-    <circle cx="4" cy="8" r="1.5" fill="#6c5ce7" opacity="0.6"/>
-    <circle cx="20" cy="8" r="1.5" fill="#6c5ce7" opacity="0.6"/>
-    <path d="M12 8 L12 14 L16 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <path d="M12 14 L8 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Single-arm dumbbell press on bench
-  'press banco unilateral': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="16" width="20" height="3" rx="1.5" fill="#3a3a4a"/>
-    <circle cx="14" cy="14" r="2.5" fill="#a0a0b0"/>
-    <rect x="8" y="15" width="12" height="2" rx="1" fill="#a0a0b0" opacity="0.4"/>
-    <path d="M18 14 L22 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="20" y="4" width="4" height="3" rx="1" fill="#6c5ce7"/>
-    <path d="M10 14 L8 18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Kettlebell swing
-  'swing': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="6" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="9" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 16 L14 16 L18 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 16 L10 23 M14 16 L18 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <circle cx="14" cy="3" r="0" fill="none"/>
-    <path d="M10 9 L6 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 9 L22 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <ellipse cx="14" cy="1" rx="3" ry="2" fill="none" stroke="#6c5ce7" stroke-width="1.5"/>
-    <circle cx="14" cy="3.5" r="2" fill="#6c5ce7" opacity="0.7"/>
-  </svg>`,
-  // Bulgarian split squat (deficit)
-  'bulgaras': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="4" r="2.5" fill="#a0a0b0"/>
-    <line x1="10" y1="7" x2="10" y2="14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 14 L7 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 14 L16 18 L20 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <rect x="19" y="14" width="6" height="3" rx="1.5" fill="#3a3a4a"/>
-    <rect x="3" y="22" width="8" height="3" rx="1" fill="#3a3a4a" opacity="0.5"/>
-  </svg>`,
-  // Jumping lunges
-  'estocadas': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="3" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="6" x2="14" y2="13" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 13 L8 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 13 L20 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M8 23 L5 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M11 6 L7 3 M17 6 L21 3" stroke="#e17055" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
-  </svg>`,
-  // Pull-up
-  'pull up': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="3" y1="3" x2="25" y2="3" stroke="#6c5ce7" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="14" cy="9" r="2.5" fill="#a0a0b0"/>
-    <path d="M10 9 L7 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 9 L21 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="12" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M11 23 L14 20 L17 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-  </svg>`,
-  // TRX Row
-  'remo trx': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="14" y1="2" x2="14" y2="8" stroke="#3a3a4a" stroke-width="2"/>
-    <line x1="10" y1="8" x2="18" y2="8" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="14" cy="14" r="2.5" fill="#a0a0b0"/>
-    <path d="M14 8 L10 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 8 L18 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="17" x2="14" y2="22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 24 L14 22 L18 24" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-  </svg>`,
-  // Press vertical unilateral
-  'press vertical': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="10" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="13" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 22 L14 20 L18 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <path d="M18 13 L22 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="20" y="2" width="4" height="3" rx="1" fill="#6c5ce7"/>
-    <path d="M10 13 L8 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Dead bug
-  'bicho muerto': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="20" cy="14" r="2.5" fill="#a0a0b0"/>
-    <line x1="6" y1="14" x2="18" y2="14" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
-    <path d="M18 14 L22 8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M6 14 L3 8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 14 L22 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M6 14 L3 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="9" y="12" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.5"/>
-    <rect x="13" y="12" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.5"/>
-  </svg>`,
-  // Renegade row
-  'renegado': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="22" cy="10" r="2.5" fill="#a0a0b0"/>
-    <line x1="5" y1="14" x2="20" y2="12" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
-    <path d="M5 14 L5 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M20 12 L20 18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M20 12 L24 6" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="22" y="4" width="4" height="3" rx="1" fill="#6c5ce7"/>
-  </svg>`,
-  // Hanging leg raise
-  'elevacion piernas': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="3" y1="3" x2="25" y2="3" stroke="#3a3a4a" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="14" cy="8" r="2.5" fill="#a0a0b0"/>
-    <path d="M10 8 L10 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 8 L18 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="14" y1="11" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 16 L8 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 16 L20 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="10" y="13" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.5"/>
-    <rect x="14" y="13" width="3" height="2" rx="0.5" fill="#e17055" opacity="0.5"/>
-  </svg>`,
-  // Side plank abduction
-  'abductor plancha': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="20" cy="8" r="2.5" fill="#a0a0b0"/>
-    <line x1="6" y1="16" x2="18" y2="10" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
-    <path d="M6 16 L6 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 10 L22 4" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 10 L16 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Cable glute med
-  'gluteo medio': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="22" y="5" width="3" height="18" rx="1.5" fill="#3a3a4a"/>
-    <circle cx="12" cy="6" r="2.5" fill="#a0a0b0"/>
-    <line x1="12" y1="9" x2="12" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M12 16 L10 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M12 16 L18 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="18" y1="14" x2="22" y2="14" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
-    <ellipse cx="13" cy="14" rx="2.5" ry="3" fill="#e17055" opacity="0.3"/>
-  </svg>`,
-  // Pallof press
-  'paloff': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="22" y="5" width="3" height="18" rx="1.5" fill="#3a3a4a"/>
-    <circle cx="10" cy="8" r="2.5" fill="#a0a0b0"/>
-    <line x1="10" y1="11" x2="10" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 11 L6 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 11 L16 11" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="16" y1="11" x2="22" y2="11" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="8" y="13" width="4" height="4" rx="0.5" fill="#e17055" opacity="0.4"/>
-  </svg>`,
-  // Good mornings
-  'buenos dias': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="5" r="2.5" fill="#a0a0b0"/>
-    <line x1="5" y1="8" x2="19" y2="8" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round"/>
-    <circle cx="4" cy="8" r="1.5" fill="#6c5ce7" opacity="0.6"/>
-    <circle cx="20" cy="8" r="1.5" fill="#6c5ce7" opacity="0.6"/>
-    <path d="M12 8 L16 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M16 16 L13 23 M16 16 L19 23" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // External rotation
-  'rotador externo': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="8" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="11" x2="14" y2="20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 11 L10 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 11 L18 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 16 L4 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 16 L24 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="2" y="12" width="3" height="3" rx="1" fill="#6c5ce7"/>
-    <rect x="23" y="12" width="3" height="3" rx="1" fill="#6c5ce7"/>
-    <path d="M6 13 Q8 10 10 13" stroke="#e17055" stroke-width="1" fill="none" opacity="0.6"/>
-    <path d="M18 13 Q20 10 22 13" stroke="#e17055" stroke-width="1" fill="none" opacity="0.6"/>
-  </svg>`,
-  // Turkish Get-Up
-  'tgu': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="18" r="2.5" fill="#a0a0b0"/>
-    <path d="M10 18 L10 12 L14 8" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <path d="M10 18 L6 24" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 18 L16 22" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 8 L18 2" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="16" y="0" width="4" height="3" rx="1" fill="#6c5ce7"/>
-  </svg>`,
-  // Stir the pot
-  'revolver la olla': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="20" cy="10" r="2.5" fill="#a0a0b0"/>
-    <line x1="5" y1="14" x2="18" y2="12" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
-    <path d="M5 14 L5 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <ellipse cx="18" cy="16" rx="6" ry="4" fill="#6c5ce7" opacity="0.2"/>
-    <path d="M18 12 L15 16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M15 16 Q18 20 21 16" stroke="#e17055" stroke-width="1" fill="none" opacity="0.6"/>
-  </svg>`,
-  // Suitcase carry
-  'caminata': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="14" cy="4" r="2.5" fill="#a0a0b0"/>
-    <line x1="14" y1="7" x2="14" y2="16" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M10 7 L10 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M18 7 L18 14" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <path d="M14 16 L10 24 M14 16 L18 24" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="3" y="12" width="5" height="4" rx="1" fill="#6c5ce7"/>
-  </svg>`,
-  // Copenhagen plank
-  'plancha copenhague': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="22" cy="10" r="2.5" fill="#a0a0b0"/>
-    <line x1="5" y1="14" x2="20" y2="12" stroke="#a0a0b0" stroke-width="2" stroke-linecap="round"/>
-    <path d="M5 14 L5 20" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-    <rect x="14" y="10" width="2" height="8" rx="0.5" fill="#3a3a4a" transform="rotate(-5 14 10)"/>
-    <path d="M20 12 L18 18" stroke="#a0a0b0" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>`,
-  // Generic dumbbell (fallback)
-  '_default': `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="10" width="5" height="8" rx="1.5" fill="#6c5ce7"/>
-    <rect x="20" y="10" width="5" height="8" rx="1.5" fill="#6c5ce7"/>
-    <rect x="1" y="12" width="3" height="4" rx="1" fill="#6c5ce7" opacity="0.6"/>
-    <rect x="24" y="12" width="3" height="4" rx="1" fill="#6c5ce7" opacity="0.6"/>
-    <line x1="8" y1="14" x2="20" y2="14" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
-  </svg>`,
+const EXERCISE_IMAGE_BASE = 'https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises';
+
+const EXERCISE_IMAGES = {
+  'sentadilla': 'Barbell_Squat',
+  'remo': 'Bent_Over_Barbell_Row',
+  'press plano': 'Barbell_Bench_Press_-_Medium_Grip',
+  'isquios': 'Lying_Leg_Curls',
+  'press militar': 'Barbell_Shoulder_Press',
+  'abductores': 'Thigh_Abductor',
+  'aductores': 'Cable_Hip_Adduction',
+  'dorsales': 'Wide-Grip_Lat_Pulldown',
+  'dominadas': 'Pullups',
+  'biceps': 'Dumbbell_Bicep_Curl',
+  'trapecios': 'Barbell_Shrug',
+  'fondos': 'Dips_-_Chest_Version',
+  'hip thrust': 'Barbell_Hip_Thrust',
+  'abdominales': 'Crunches',
+  'peso muerto': 'Barbell_Deadlift',
+  'prensa': 'Leg_Press',
+  'cuadriceps': 'Leg_Extensions',
+  'apertura': 'Incline_Dumbbell_Flyes',
+  'vuelos laterales': 'Side_Lateral_Raise',
+  'biceps barra': 'EZ-Bar_Curl',
+  'triceps': 'Triceps_Pushdown',
+  'sentadilla bulgara': 'Split_Squat_with_Dumbbells',
+  'face pull': 'Face_Pull',
+  'gemelos': 'Standing_Calf_Raises',
+  'press inclinado': 'Barbell_Incline_Bench_Press_-_Medium_Grip',
+  'jalon': 'Full_Range-Of-Motion_Lat_Pulldown',
+  'remo polea': 'Seated_Cable_Rows',
+  'plancha': 'Plank',
+  'peso muerto rumano': 'Romanian_Deadlift',
+  'zancadas': 'Barbell_Lunge',
+  'chin ups': 'Chin-Up',
+  'salto al cajon': 'Box_Jump_Multiple_Response',
+  'paloma': 'Barbell_Lunge',
+  'press hombros': 'Dumbbell_Shoulder_Press',
+  'subida al banco': 'Barbell_Step_Ups',
+  'press banco unilateral': 'One_Arm_Dumbbell_Bench_Press',
+  'swing': 'One-Arm_Kettlebell_Swings',
+  'bulgaras': 'Split_Squat_with_Dumbbells',
+  'estocadas': 'Dumbbell_Lunges',
+  'pull up': 'Pullups',
+  'remo trx': null,
+  'press vertical': 'Dumbbell_One-Arm_Shoulder_Press',
+  'bicho muerto': 'Dead_Bug',
+  'renegado': 'Alternating_Renegade_Row',
+  'elevacion piernas': 'Hanging_Leg_Raise',
+  'abductor plancha': null,
+  'gluteo medio': null,
+  'paloff': null,
+  'buenos dias': 'Good_Morning',
+  'rotador externo': 'External_Rotation_with_Cable',
+  'tgu': 'Kettlebell_Turkish_Get-Up_Squat_style',
+  'revolver la olla': null,
+  'caminata': 'Farmers_Walk',
+  'plancha copenhague': null,
 };
 
-// Aliases
-EXERCISE_ICONS['remo en barra'] = EXERCISE_ICONS['remo'];
-EXERCISE_ICONS['press banca'] = EXERCISE_ICONS['press plano'];
-EXERCISE_ICONS['bíceps mancuernas'] = EXERCISE_ICONS['biceps'];
-EXERCISE_ICONS['biceps mancuernas'] = EXERCISE_ICONS['biceps'];
-EXERCISE_ICONS['hip thrusts'] = EXERCISE_ICONS['hip thrust'];
-EXERCISE_ICONS['hipthrusts'] = EXERCISE_ICONS['hip thrust'];
-EXERCISE_ICONS['abs'] = EXERCISE_ICONS['abdominales'];
-EXERCISE_ICONS['sentadilla búlgara'] = EXERCISE_ICONS['sentadilla bulgara'];
-EXERCISE_ICONS['elevaciones laterales'] = EXERCISE_ICONS['vuelos laterales'];
-EXERCISE_ICONS['bíceps barra w'] = EXERCISE_ICONS['biceps barra'];
-EXERCISE_ICONS['biceps barra w'] = EXERCISE_ICONS['biceps barra'];
-EXERCISE_ICONS['tríceps'] = EXERCISE_ICONS['triceps'];
-EXERCISE_ICONS['face pulls'] = EXERCISE_ICONS['face pull'];
-EXERCISE_ICONS['pantorrillas'] = EXERCISE_ICONS['gemelos'];
-EXERCISE_ICONS['curl'] = EXERCISE_ICONS['biceps'];
-EXERCISE_ICONS['jalón'] = EXERCISE_ICONS['jalon'];
-EXERCISE_ICONS['lunges'] = EXERCISE_ICONS['zancadas'];
-EXERCISE_ICONS['apertura inclinada'] = EXERCISE_ICONS['apertura'];
-EXERCISE_ICONS['cuádriceps'] = EXERCISE_ICONS['cuadriceps'];
-EXERCISE_ICONS['paloma barra'] = EXERCISE_ICONS['paloma'];
-EXERCISE_ICONS['hip trust'] = EXERCISE_ICONS['hip thrust'];
-EXERCISE_ICONS['press hombros vertical'] = EXERCISE_ICONS['press hombros'];
-EXERCISE_ICONS['press hombros vertical con barra'] = EXERCISE_ICONS['press hombros'];
-EXERCISE_ICONS['subida al banco con barra'] = EXERCISE_ICONS['subida al banco'];
-EXERCISE_ICONS['press banco unilateral con mancuerna'] = EXERCISE_ICONS['press banco unilateral'];
-EXERCISE_ICONS['press vertical unilateral con mancuerna'] = EXERCISE_ICONS['press vertical'];
-EXERCISE_ICONS['press vertical unilateral'] = EXERCISE_ICONS['press vertical'];
-EXERCISE_ICONS['bulgaras con deficit'] = EXERCISE_ICONS['bulgaras'];
-EXERCISE_ICONS['búlgaras'] = EXERCISE_ICONS['bulgaras'];
-EXERCISE_ICONS['estocadas saltadas'] = EXERCISE_ICONS['estocadas'];
-EXERCISE_ICONS['salto al cajón'] = EXERCISE_ICONS['salto al cajon'];
-EXERCISE_ICONS['remo en banco'] = EXERCISE_ICONS['remo'];
-EXERCISE_ICONS['pallof'] = EXERCISE_ICONS['paloff'];
-EXERCISE_ICONS['pallof cangrejo'] = EXERCISE_ICONS['paloff'];
-EXERCISE_ICONS['turkish get-up'] = EXERCISE_ICONS['tgu'];
-EXERCISE_ICONS['caminata de la valija'] = EXERCISE_ICONS['caminata'];
-EXERCISE_ICONS['revolver la olla'] = EXERCISE_ICONS['revolver la olla'];
-EXERCISE_ICONS['buenos días'] = EXERCISE_ICONS['buenos dias'];
-EXERCISE_ICONS['plancha copenhague en trx'] = EXERCISE_ICONS['plancha copenhague'];
-EXERCISE_ICONS['plancha 1 pie en trx'] = EXERCISE_ICONS['plancha'];
-EXERCISE_ICONS['bicho muerto con pesa y tobillera'] = EXERCISE_ICONS['bicho muerto'];
-EXERCISE_ICONS['abductor de plancha lateral'] = EXERCISE_ICONS['abductor plancha'];
-EXERCISE_ICONS['glúteo medio con polea'] = EXERCISE_ICONS['gluteo medio'];
-EXERCISE_ICONS['rotador externo con polea'] = EXERCISE_ICONS['rotador externo'];
-EXERCISE_ICONS['rotador externo bajo'] = EXERCISE_ICONS['rotador externo'];
-EXERCISE_ICONS['rotador externo en 4 apoyos'] = EXERCISE_ICONS['rotador externo'];
-EXERCISE_ICONS['elevación de piernas colgado'] = EXERCISE_ICONS['elevacion piernas'];
-EXERCISE_ICONS['turkish get-up (tgu)'] = EXERCISE_ICONS['tgu'];
+const EXERCISE_IMAGE_ALIASES = {
+  'remo en barra': 'remo',
+  'press banca': 'press plano',
+  'biceps mancuernas': 'biceps',
+  'hip thrusts': 'hip thrust',
+  'hipthrusts': 'hip thrust',
+  'abs': 'abdominales',
+  'sentadilla bulgara': 'sentadilla bulgara',
+  'elevaciones laterales': 'vuelos laterales',
+  'biceps barra w': 'biceps barra',
+  'face pulls': 'face pull',
+  'pantorrillas': 'gemelos',
+  'curl': 'biceps',
+  'jalon': 'jalon',
+  'lunges': 'zancadas',
+  'apertura inclinada': 'apertura',
+  'cuadriceps': 'cuadriceps',
+  'paloma barra': 'paloma',
+  'hip trust': 'hip thrust',
+  'press hombros vertical': 'press hombros',
+  'press hombros vertical con barra': 'press hombros',
+  'subida al banco con barra': 'subida al banco',
+  'press banco unilateral con mancuerna': 'press banco unilateral',
+  'press vertical unilateral con mancuerna': 'press vertical',
+  'press vertical unilateral': 'press vertical',
+  'bulgaras con deficit': 'bulgaras',
+  'estocadas saltadas': 'estocadas',
+  'salto al cajon': 'salto al cajon',
+  'remo en banco': 'remo',
+  'pallof': 'paloff',
+  'pallof cangrejo': 'paloff',
+  'turkish get-up': 'tgu',
+  'turkish get-up (tgu)': 'tgu',
+  'caminata de la valija': 'caminata',
+  'revolver la olla': 'revolver la olla',
+  'plancha copenhague en trx': 'plancha copenhague',
+  'plancha 1 pie en trx': 'plancha',
+  'bicho muerto con pesa y tobillera': 'bicho muerto',
+  'abductor de plancha lateral': 'abductor plancha',
+  'gluteo medio con polea': 'gluteo medio',
+  'rotador externo con polea': 'rotador externo',
+  'rotador externo bajo': 'rotador externo',
+  'rotador externo en 4 apoyos': 'rotador externo',
+  'elevacion de piernas colgado': 'elevacion piernas',
+};
 
-function getExerciseIcon(exerciseName) {
-  const name = exerciseName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  // Exact match
-  for (const [key, svg] of Object.entries(EXERCISE_ICONS)) {
-    if (key === '_default') continue;
-    const normKey = key.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    if (name === normKey || name.includes(normKey) || normKey.includes(name)) return svg;
+const FALLBACK_ICON_SVG = `<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="3" y="10" width="5" height="8" rx="1.5" fill="#6c5ce7"/>
+  <rect x="20" y="10" width="5" height="8" rx="1.5" fill="#6c5ce7"/>
+  <rect x="1" y="12" width="3" height="4" rx="1" fill="#6c5ce7" opacity="0.6"/>
+  <rect x="24" y="12" width="3" height="4" rx="1" fill="#6c5ce7" opacity="0.6"/>
+  <line x1="8" y1="14" x2="20" y2="14" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+</svg>`;
+
+function getExerciseImage(exerciseName) {
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const name = norm(exerciseName);
+  let imageId = undefined;
+
+  for (const [alias, target] of Object.entries(EXERCISE_IMAGE_ALIASES)) {
+    const a = norm(alias);
+    if (name === a || name.includes(a) || a.includes(name)) {
+      imageId = EXERCISE_IMAGES[target];
+      break;
+    }
   }
-  // Partial match
-  for (const [key, svg] of Object.entries(EXERCISE_ICONS)) {
-    if (key === '_default') continue;
-    const normKey = key.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    const words = normKey.split(' ');
-    if (words.some(w => w.length > 3 && name.includes(w))) return svg;
+
+  if (imageId === undefined) {
+    for (const [key, id] of Object.entries(EXERCISE_IMAGES)) {
+      const k = norm(key);
+      if (name === k || name.includes(k) || k.includes(name)) { imageId = id; break; }
+    }
   }
-  return EXERCISE_ICONS['_default'];
+
+  if (imageId === undefined) {
+    for (const [key, id] of Object.entries(EXERCISE_IMAGES)) {
+      const words = norm(key).split(' ');
+      if (words.some(w => w.length > 3 && name.includes(w))) { imageId = id; break; }
+    }
+  }
+
+  if (imageId) {
+    const url = `${EXERCISE_IMAGE_BASE}/${imageId}/0.jpg`;
+    return `<img src="${url}" alt="${escHtml(exerciseName)}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML=FALLBACK_ICON_SVG">`;
+  }
+  return FALLBACK_ICON_SVG;
 }
+
 
 
 // ==================== MUSCLE GROUP LOOKUP ====================
@@ -2060,7 +1603,7 @@ function buildExCardHtml(ex, i, opts) {
     ${muscle ? `<div class="exercise-card-bar" ${muscleStyle}></div>` : ''}
     <div class="exercise-content">
       <div class="exercise-row">
-        <div class="exercise-icon">${getExerciseIcon(ex.name)}</div>
+        <div class="exercise-icon">${getExerciseImage(ex.name)}</div>
         <div class="exercise-body">
           <div class="exercise-top">
             <button class="btn-check ${ex.done?'checked':''}" onclick="${pfx}toggleDone(${addr})">✓</button>
