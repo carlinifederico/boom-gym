@@ -325,7 +325,7 @@ input, button { font-family: inherit; }
 .exercise-content { margin-left: 0; }
 
 .exercise-top {
-  display: flex; align-items: center; gap: 4px; flex-wrap: nowrap;
+  display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
 }
 .exercise-top-row {
   display: flex; align-items: center; gap: 4px; width: 100%;
@@ -335,7 +335,7 @@ input, button { font-family: inherit; }
 }
 .exercise-name {
   font-size: 11px; font-weight: 600; color: var(--text);
-  flex: 1; min-width: 0; letter-spacing: 0.2px;
+  flex: 1 1 60%; min-width: 0; letter-spacing: 0.2px;
   display: flex; flex-direction: column; gap: 1px;
 }
 .exercise-name input {
@@ -1001,7 +1001,7 @@ const EXERCISE_IMAGES = {
   'zancadas': 'Barbell_Lunge',
   'chin ups': 'Chin-Up',
   'salto al cajon': 'Box_Jump_Multiple_Response',
-  'paloma': 'Barbell_Lunge',
+  'paloma': 'Dumbbell_Rear_Lunge',
   'press hombros': 'Dumbbell_Shoulder_Press',
   'subida al banco': 'Barbell_Step_Ups',
   'press banco unilateral': 'One_Arm_Dumbbell_Bench_Press',
@@ -1009,20 +1009,20 @@ const EXERCISE_IMAGES = {
   'bulgaras': 'Split_Squat_with_Dumbbells',
   'estocadas': 'Dumbbell_Lunges',
   'pull up': 'Pullups',
-  'remo trx': null,
+  'remo trx': 'Inverted_Row_with_Straps',
   'press vertical': 'Dumbbell_One-Arm_Shoulder_Press',
   'bicho muerto': 'Dead_Bug',
   'renegado': 'Alternating_Renegade_Row',
   'elevacion piernas': 'Hanging_Leg_Raise',
-  'abductor plancha': null,
-  'gluteo medio': null,
-  'paloff': null,
+  'abductor plancha': 'Push_Up_to_Side_Plank',
+  'gluteo medio': 'Thigh_Abductor',
+  'paloff': 'Pallof_Press',
   'buenos dias': 'Good_Morning',
   'rotador externo': 'External_Rotation_with_Cable',
   'tgu': 'Kettlebell_Turkish_Get-Up_Squat_style',
-  'revolver la olla': null,
+  'revolver la olla': 'Exercise_Ball_Crunch',
   'caminata': 'Farmers_Walk',
-  'plancha copenhague': null,
+  'plancha copenhague': 'Thigh_Adductor',
 };
 
 const EXERCISE_IMAGE_ALIASES = {
@@ -1319,22 +1319,25 @@ function migrateV2toV3(d) {
 }
 
 // ==================== DEFAULT DATA ====================
-function buildCoreInicio() {
+function buildCoreInicioDia1() {
   return {
     type: 'core', name: 'CORE INICIO', rounds: 2, restTime: 60,
     exercises: [
       { name: 'Plancha 1 pie en TRX', sets: [20], note: 'segundos', muscleGroup: 'core' },
-      { name: 'Bicho muerto con pesa y tobillera', sets: [20], note: '', muscleGroup: 'core' },
-      { name: 'Renegado', sets: [8], note: '', muscleGroup: 'core' },
       { name: 'Elevación de piernas colgado', sets: [8], note: '', muscleGroup: 'core' },
-      { name: 'Plancha Copenhague en TRX', sets: [20], note: 'seg c/lado', muscleGroup: 'core' },
-      { name: 'Abductor de plancha lateral', sets: [15], note: 'c/lado', muscleGroup: 'core' },
       { name: 'Glúteo medio con polea', sets: [8], note: 'c/lado', muscleGroup: 'piernas' },
+      { name: 'Rotador externo con polea', sets: [8], note: 'c/lado', muscleGroup: 'hombros' }
+    ]
+  };
+}
+function buildCoreInicioDia2() {
+  return {
+    type: 'core', name: 'CORE INICIO', rounds: 2, restTime: 60,
+    exercises: [
+      { name: 'Bicho muerto con pesa y tobillera', sets: [20], note: '', muscleGroup: 'core' },
+      { name: 'Plancha Copenhague en TRX', sets: [20], note: 'seg c/lado', muscleGroup: 'core' },
       { name: 'Pallof cangrejo', sets: [5], note: 'c/lado', muscleGroup: 'core' },
-      { name: 'Buenos días', sets: [8], note: '', muscleGroup: 'piernas' },
-      { name: 'Rotador externo con polea', sets: [8], note: 'c/lado', muscleGroup: 'hombros' },
-      { name: 'Rotador externo bajo', sets: [10,10], note: '', muscleGroup: 'hombros' },
-      { name: 'Rotador externo en 4 apoyos', sets: [6,6], note: '', muscleGroup: 'hombros' }
+      { name: 'Rotador externo bajo', sets: [10,10], note: '', muscleGroup: 'hombros' }
     ]
   };
 }
@@ -1360,7 +1363,7 @@ function buildRutinaFuncional() {
         name: 'DÍA 1', subtitle: 'Aproximar sentadilla!', restTime: 180,
         exercises: [],
         sections: [
-          buildCoreInicio(),
+          buildCoreInicioDia1(),
           {
             type: 'block', name: 'Bloque 1', rounds: 4, restTime: 180,
             exercises: [
@@ -1392,7 +1395,7 @@ function buildRutinaFuncional() {
         name: 'DÍA 2', subtitle: 'Aproximar peso muerto!', restTime: 180,
         exercises: [],
         sections: [
-          buildCoreInicio(),
+          buildCoreInicioDia2(),
           {
             type: 'block', name: 'Bloque 1', rounds: 4, restTime: 180,
             exercises: [
